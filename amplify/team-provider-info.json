@@ -1,0 +1,25 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-contentgenerator-dev-141520-authRole",
+      "UnauthRoleArn": "arn:aws:iam::783533502506:role/amplify-contentgenerator-dev-141520-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::783533502506:role/amplify-contentgenerator-dev-141520-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-contentgenerator-dev-141520-deployment",
+      "UnauthRoleName": "amplify-contentgenerator-dev-141520-unauthRole",
+      "StackName": "amplify-contentgenerator-dev-141520",
+      "StackId": "arn:aws:cloudformation:us-east-1:783533502506:stack/amplify-contentgenerator-dev-141520/430c7ef0-d25c-11ed-b21f-0ae554643d05",
+      "AmplifyAppId": "dbfz4n0umasmp"
+    },
+    "categories": {
+      "auth": {
+        "contentgeneratorb8a33bed": {
+          "userPoolId": "us-east-1_EcHBow0LR",
+          "userPoolName": "SwiftReach-users",
+          "webClientId": "7igjc5q0ugl7rbp9atcm2qp5mb",
+          "nativeClientId": "po99f6lm457dlilc76kf9mmtu"
+        }
+      }
+    }
+  }
+}
