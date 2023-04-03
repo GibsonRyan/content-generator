@@ -5,14 +5,22 @@ import Routes from "./routes";
 import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "./theme";
+import { Amplify } from 'aws-amplify';
+import awsconfig from './aws-exports';
+import { AuthProvider } from "./AuthContext";
+
+Amplify.configure(awsconfig);
+
 
 const container = document.getElementById("root");
 const root = createRoot(container);
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <Routes />
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <Routes />
+      </ThemeProvider>
+    </AuthProvider>
   </React.StrictMode>,
 );
 

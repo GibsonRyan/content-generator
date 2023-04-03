@@ -3,15 +3,20 @@ import { AppBar, Box, Button, Container, CssBaseline, Drawer, List, ListItem, Li
 import { useNavigate } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import BarChartIcon from "@mui/icons-material/BarChart";
+import { Auth } from "aws-amplify";
+
 
 const drawerWidth = 240;
 
 const Dashboard = () => {
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    // Perform your logout logic here and redirect to the login page
-    navigate("/login");
+  const handleLogout = async () => {
+    try {
+      await Auth.signOut();
+    } catch (err) {
+      console.error("Error signing out: ", err);
+    }
   };
 
   return (
@@ -59,6 +64,12 @@ const Dashboard = () => {
                 <BarChartIcon style={{ color: "White"}}/>
               </ListItemIcon>
               <ListItemText primary="Analytics" />
+            </ListItemButton>
+            <ListItemButton onClick={() => navigate("/linked-accounts")}>
+              <ListItemIcon>
+                <BarChartIcon style={{ color: "White"}}/>
+              </ListItemIcon>
+              <ListItemText primary="Linked Accounts" />
             </ListItemButton>
           </List>
         </Box>
