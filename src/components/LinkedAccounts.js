@@ -4,11 +4,12 @@ import { useNavigate } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import { Auth } from "aws-amplify";
+import { Link } from "react-router-dom";
 
 
 const drawerWidth = 240;
 
-const Dashboard = () => {
+const LinkedAccounts = () => {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -55,19 +56,19 @@ const Dashboard = () => {
           <List>
             <ListItemButton onClick={() => navigate("/dashboard")}>
               <ListItemIcon>
-                <DashboardIcon style={{ color: "White"}}/>
+                <DashboardIcon style={{ color: "White" }} />
               </ListItemIcon>
               <ListItemText primary="Dashboard" />
             </ListItemButton>
             <ListItemButton onClick={() => navigate("/analytics")}>
               <ListItemIcon>
-                <BarChartIcon style={{ color: "White"}}/>
+                <BarChartIcon style={{ color: "White" }} />
               </ListItemIcon>
               <ListItemText primary="Analytics" />
             </ListItemButton>
             <ListItemButton onClick={() => navigate("/linked-accounts")}>
               <ListItemIcon>
-                <BarChartIcon style={{ color: "White"}}/>
+                <BarChartIcon style={{ color: "White" }} />
               </ListItemIcon>
               <ListItemText primary="Linked Accounts" />
             </ListItemButton>
@@ -78,7 +79,10 @@ const Dashboard = () => {
         <Toolbar />
         <Container maxWidth="lg">
           {/* Add your main content here */}
-          <Typography variant="h4">Posts</Typography>
+          <Typography variant="h4">Linked Accounts</Typography>
+          <Button component={Link} to="/link-account" color="secondary" variant="contained">
+            Link Account
+          </Button>
           {/* Render the list of user posts */}
         </Container>
       </Box>
@@ -86,4 +90,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default LinkedAccounts;

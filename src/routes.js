@@ -7,6 +7,8 @@ import CreatePostDialog from "./components/CreatePostDialog";
 import { Auth, Hub } from "aws-amplify";
 import React, { useEffect, useState, useContext } from "react";
 import AuthContext from "./AuthContext";
+import LinkedAccounts from "./components/LinkedAccounts";
+import LinkAccount from "./components/LinkAccount";
 
 const MainRoutes = () => {
   const { isAuthenticated, loading } = useContext(AuthContext);
@@ -22,6 +24,8 @@ const MainRoutes = () => {
           <>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/analytics" element={<Analytics />} />
+            <Route path="/linked-accounts" element={<LinkedAccounts />} />
+            <Route path="/link-account" element={<LinkAccount />} />
             <Route path="/create-post" element={<CreatePostDialog />} />
             <Route path="*" element={<Navigate to="/dashboard" />} />
           </>
