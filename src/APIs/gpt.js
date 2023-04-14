@@ -1,8 +1,7 @@
 // openaiHelper.js
 import openai from "openai";
 
-const API_KEY = "your_openai_api_key";
-openai.apiKey = API_KEY;
+openai.apiKey = process.env.OPENAI_API_KEY;
 
 export const fetchOpenAIResponse = async (prompt) => {
   try {
