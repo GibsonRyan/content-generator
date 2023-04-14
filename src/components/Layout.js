@@ -8,7 +8,21 @@ import SchoolIcon from '@mui/icons-material/School';
 import { Auth } from "aws-amplify";
 
 const Layout = () => {
+  const [userName, setUserName] = React.useState("");
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const user = await Auth.currentAuthenticatedUser();
+        setUserName(`${user.attributes.given_name} ${user.attributes.family_name}`);
+      } catch (error) {
+        console.error("Error fetching user information:", error);
+      }
+    };
+  
+    fetchUser();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -28,8 +42,8 @@ const Layout = () => {
           <Typography variant="h4" noWrap component="div" sx={{ flexGrow: 1, fontWeight: 'bold'}}>
             SwiftReach
           </Typography>
-          <Typography variant="subtitle1" noWrap component="div">
-            User Name
+          <Typography variant="subtitle1" noWrap component="div" sx={{ marginRight: "16px" }}>
+            {userName}
           </Typography>
           <Button color="secondary" variant="contained" onClick={handleLogout}>
             Sign Out

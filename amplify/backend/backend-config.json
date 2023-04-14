@@ -70,6 +70,22 @@
           "resourceName": "contentgeneratorb8a33bed"
         }
       ]
+    },
+    "AMPLIFY_function_swiftreachprompts_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "swiftreachprompts"
+        }
+      ]
+    },
+    "AMPLIFY_function_swiftreachprompts_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "swiftreachprompts"
+        }
+      ]
     }
   },
   "storage": {

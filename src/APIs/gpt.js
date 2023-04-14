@@ -1,16 +1,17 @@
 // openaiHelper.js
-import openai from "openai";
+import { Configuration, OpenAIApi } from "openai";
 
-openai.apiKey = process.env.OPENAI_API_KEY;
+const configuration = new Configuration({
+  organization: "org-G3FPFBv5pNTvhDynPn9CYhH7",
+  apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
 
 export const fetchOpenAIResponse = async (prompt) => {
   try {
-    const response = await openai.Completion.create({
-      engine: "davinci-codex",
+    const response = await openai.createCompletion({
+      engine: "gpt-3.5-turbo",
       prompt: prompt,
-      max_tokens: 4096,
-      n: 1,
-      stop: null,
       temperature: 0.5,
     });
 
