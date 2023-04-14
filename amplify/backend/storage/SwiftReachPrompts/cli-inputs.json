@@ -1,0 +1,10 @@
+{
+  "resourceName": "SwiftReachPrompts",
+  "tableName": "SwiftReachPrompts",
+  "partitionKey": {
+    "fieldName": "id",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

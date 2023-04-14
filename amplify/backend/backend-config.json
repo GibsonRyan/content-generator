@@ -8,6 +8,36 @@
       "serviceType": "imported"
     }
   },
+  "function": {
+    "swiftreachprompts": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "storage",
+          "resourceName": "SwiftReachPrompts"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn",
+            "StreamArn"
+          ],
+          "category": "storage",
+          "resourceName": "SwiftReachPrompts"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
   "parameters": {
     "AMPLIFY_auth_contentgeneratorb8a33bed_nativeClientId": {
       "usedBy": [
@@ -40,6 +70,12 @@
           "resourceName": "contentgeneratorb8a33bed"
         }
       ]
+    }
+  },
+  "storage": {
+    "SwiftReachPrompts": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
     }
   }
 }
