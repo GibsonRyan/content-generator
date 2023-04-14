@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/prompt": {
+      "name": "/prompt",
+      "lambdaFunction": "swiftreachprompts",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

@@ -1,4 +1,20 @@
 {
+  "api": {
+    "SwiftReachAPI": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "swiftreachprompts"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    }
+  },
   "auth": {
     "contentgeneratorb8a33bed": {
       "customAuth": false,
