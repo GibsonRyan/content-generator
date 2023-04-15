@@ -9,6 +9,14 @@
           ],
           "category": "function",
           "resourceName": "swiftreachprompts"
+        },
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "swiftreachhistory"
         }
       ],
       "providerPlugin": "awscloudformation",
