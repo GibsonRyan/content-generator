@@ -138,7 +138,7 @@ const Chatbot = () => {
   useEffect(() => {
     return () => {
       // This function will be called when the component is unmounted
-      sendChatHistory();
+      sendChatHistory(chatHistoryRef.current);
     };
   }, []); // Pass an empty array as the dependency to run the cleanup function only on unmount
 
