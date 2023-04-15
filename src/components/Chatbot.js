@@ -2,11 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button, Container, Typography, Grid, Select, MenuItem, InputLabel, FormControl, AppBar, TextField, Switch, FormControlLabel, Box, CircularProgress, List, ListItem } from "@mui/material";
 import FaceIcon from "@mui/icons-material/Face";
 import MicIcon from "@mui/icons-material/Mic";
-import MicOffIcon from '@mui/icons-material/MicOff';
 import { fetchOpenAIResponse } from "../APIs/gpt";
 import { API } from "aws-amplify";
 import axios from "axios";
-import formData from "form-data";
+import Tooltip from '@mui/material/Tooltip';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+
 
 const Chatbot = () => {
   const [language, setLanguage] = useState("");
@@ -192,9 +193,13 @@ const Chatbot = () => {
                 }
                 label="AI Voice"
               />
-              <Typography variant="caption" sx={{ color: 'info.main' }}>
-                Disclaimer: The AI voice will be optimized for the Chatbot's selected language, not English
-              </Typography>
+              <Tooltip
+                title="Disclaimer: The AI voice will be optimized for the Chatbot's selected language, not English"
+                placement="right"
+                arrow
+              >
+                <InfoOutlinedIcon sx={{ color: 'primary.main', marginLeft: 1, cursor: 'pointer' }} />
+              </Tooltip>
             </Grid>
           </Grid>
         </Grid>
