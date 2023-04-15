@@ -27,7 +27,7 @@
         },
         "swiftreachhistory": {
           "deploymentBucketName": "amplify-contentgenerator-dev-141520-deployment",
-          "s3Key": "amplify-builds/swiftreachhistory-6c626e4f345455716943-build.zip"
+          "s3Key": "amplify-builds/swiftreachhistory-57474945357a514d674b-build.zip"
         }
       },
       "storage": {
