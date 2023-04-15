@@ -36,17 +36,13 @@ app.use(function(req, res, next) {
 });
 
 app.get('/history', function(req, res) {
-  const { userId, type } = req.query;
+  const { userId } = req.query;
   
   const params = {
     TableName: tableName,
-    FilterExpression: "userId = :userId AND #type = :type",
-    ExpressionAttributeNames: {
-      "#type": "type"
-    },
+    FilterExpression: "userId = :userId",
     ExpressionAttributeValues: {
       ":userId": userId,
-      ":type": type
     }
   };
 
