@@ -1,18 +1,31 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Container, Typography, Grid, Select, MenuItem, InputLabel, FormControl, AppBar, TextField, Switch, FormControlLabel, Box, CircularProgress, List, ListItem } from "@mui/material";
 import FaceIcon from "@mui/icons-material/Face";
 import MicIcon from "@mui/icons-material/Mic";
+import MicOffIcon from '@mui/icons-material/MicOff';
 import { fetchOpenAIResponse } from "../APIs/gpt";
 import { API } from "aws-amplify";
+import axios from "axios";
+import formData from "form-data";
 
 const Chatbot = () => {
-  const [language, setLanguage] = React.useState("");
-  const [topic, setTopic] = React.useState("");
-  const [aiVoice, setAiVoice] = React.useState(true);
-  const [inputText, setInputText] = React.useState("");
-  const [chatHistory, setChatHistory] = React.useState([]);
-  const [prompt, setPrompt] = React.useState("");
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [language, setLanguage] = useState("");
+  const [topic, setTopic] = useState("");
+  const [aiVoice, setAiVoice] = useState(true);
+  const [inputText, setInputText] = useState("");
+  const [chatHistory, setChatHistory] = useState([]);
+  const [prompt, setPrompt] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const mediaRecorder = useRef(null);
+
+  const handleMicIconClick = async () => {
+    if (!isRecording) {
+      startRecording();
+    } else {
+      await stopRecording();
+    }
+  };
 
   const handleLanguageChange = (event) => {
     setLanguage(event.target.value);
@@ -51,6 +64,49 @@ const Chatbot = () => {
     // Clear the input field
     setInputText("");
   };
+
+  const startRecording = async () => {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder.current = new MediaRecorder(stream);
+    const chunks = [];
+
+    mediaRecorder.current.ondataavailable = (event) => {
+      chunks.push(event.data);
+    };
+
+    mediaRecorder.current.onstop = async () => {
+      const blob = new Blob(chunks, { type: 'audio/webm' });
+      const transcript = await uploadAudioToWhisper(blob);
+      setInputText(transcript);
+    };
+
+    mediaRecorder.current.start();
+    setIsRecording(true);
+  };
+
+  const stopRecording = async () => {
+    mediaRecorder.current.stop();
+    setIsRecording(false);
+  };
+
+  const uploadAudioToWhisper = async (audioBlob) => {
+    const formData = new FormData();
+    formData.append('file', audioBlob, 'audio.webm');
+    formData.append('model', 'whisper-1');
+    try {
+      const response = await axios.post('https://api.openai.com/v1/audio/transcriptions', formData, {
+        headers: {
+          'Authorization': `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log(response)
+      return response.data.text;
+    } catch (error) {
+      console.log(error)
+    }
+  };
+
 
   useEffect(() => {
     const fetchPrompt = async () => {
@@ -144,7 +200,7 @@ const Chatbot = () => {
             <Grid container alignItems="center" justifyContent="center">
               <FaceIcon
                 sx={{
-                  fontSize: "3rem", 
+                  fontSize: "3rem",
                 }}
               />
             </Grid>
@@ -187,7 +243,11 @@ const Chatbot = () => {
               />
             </Grid>
             <Grid item>
-              <MicIcon />
+              {isRecording ? (
+                <MicOffIcon onClick={handleMicIconClick} />
+              ) : (
+                <MicIcon onClick={handleMicIconClick} />
+              )}
             </Grid>
           </Grid>
         </Grid>
