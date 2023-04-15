@@ -7,10 +7,11 @@ import { API } from "aws-amplify";
 import axios from "axios";
 import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Polly, Config } from "aws-sdk";
+import { Polly } from "aws-sdk";
+import AWS from "aws-sdk";
 import { Howl } from "howler";
 
-Config.update({
+AWS.config.update({
   accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
   region: process.env.REACT_APP_AWS_REGION,
@@ -83,7 +84,11 @@ const Chatbot = () => {
         audioPlayer.stop();
       }
       const audioUrl = await textToSpeech(openAIResponse, language);
-      const player = new Howl({ src: [audioUrl] });
+      const player = new Howl({
+        src: [audioUrl],
+        html5: true, // Add this line to force HTML5 Audio, it might help with playback issues
+        onend: () => console.log("Playback has finished."),
+      });
       player.play();
       setAudioPlayer(player);
     }
@@ -322,6 +327,7 @@ const textToSpeech = async (text, language) => {
   try {
     const data = await polly.synthesizeSpeech(params).promise();
     const audioUrl = URL.createObjectURL(new Blob([data.AudioStream]));
+    console.log("Audio URL", audioUrl);
     return audioUrl;
   } catch (error) {
     console.error("Error synthesizing speech", error);
