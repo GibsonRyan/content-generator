@@ -25,6 +25,25 @@
     }
   },
   "function": {
+    "swiftreachhistory": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "storage",
+          "resourceName": "SwiftReachHistory"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "swiftreachprompts": {
       "build": true,
       "dependsOn": [
@@ -102,9 +121,71 @@
           "resourceName": "swiftreachprompts"
         }
       ]
+    },
+    "AMPLIFY_storage_SwiftReachHistory_arn": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "SwiftReachHistory"
+        }
+      ]
+    },
+    "AMPLIFY_storage_SwiftReachHistory_partitionKeyName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "SwiftReachHistory"
+        }
+      ]
+    },
+    "AMPLIFY_storage_SwiftReachHistory_partitionKeyType": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "SwiftReachHistory"
+        }
+      ]
+    },
+    "AMPLIFY_storage_SwiftReachHistory_region": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "SwiftReachHistory"
+        }
+      ]
+    },
+    "AMPLIFY_storage_SwiftReachHistory_sortKeyName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "SwiftReachHistory"
+        }
+      ]
+    },
+    "AMPLIFY_storage_SwiftReachHistory_sortKeyType": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "SwiftReachHistory"
+        }
+      ]
+    },
+    "AMPLIFY_storage_SwiftReachHistory_tableName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "SwiftReachHistory"
+        }
+      ]
     }
   },
   "storage": {
+    "SwiftReachHistory": {
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB",
+      "serviceType": "imported"
+    },
     "SwiftReachPrompts": {
       "providerPlugin": "awscloudformation",
       "service": "DynamoDB"
