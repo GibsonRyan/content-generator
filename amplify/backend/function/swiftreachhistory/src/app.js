@@ -55,26 +55,27 @@ app.get('/history', function(req, res) {
 app.post('/history', function(req, res) {
   const { userId, type, history } = req.body;
   if (history.length === 0) res.status(200).json({ success: "No history to save" });
-
-  const newItem = {
-    id: uuidv4(),
-    userId,
-    type,
-    history
-  };
-
-  const params = {
-    TableName: tableName,
-    Item: newItem
-  };
-
-  dynamodb.put(params, (err, data) => {
-    if (err) {
-      res.status(500).json({ error: "Error saving history" });
-    } else {
-      res.json(newItem);
-    }
-  });
+  else {
+    const newItem = {
+      id: uuidv4(),
+      userId,
+      type,
+      history
+    };
+  
+    const params = {
+      TableName: tableName,
+      Item: newItem
+    };
+  
+    dynamodb.put(params, (err, data) => {
+      if (err) {
+        res.status(500).json({ error: "Error saving history" });
+      } else {
+        res.json(newItem);
+      }
+    });
+  }
 });
 
 app.delete('/history/:id', function(req, res) {
