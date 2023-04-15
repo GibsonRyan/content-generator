@@ -123,7 +123,7 @@ const Chatbot = () => {
     const fetchPrompt = async () => {
       if (language && topic) {
         setIsLoading(true);
-        await getPrompt(language, topic);
+        setPrompt(await getPrompt(language, topic));
         setIsLoading(false);
       }
     };
