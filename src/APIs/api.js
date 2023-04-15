@@ -1,4 +1,4 @@
-import { API } from "aws-amplify";
+import { API, Auth } from "aws-amplify";
 
 export const getPrompt = async (language, topic) => {
   const apiName = "SwiftReachAPI";
