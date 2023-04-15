@@ -10,6 +10,9 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Polly } from "aws-sdk";
 import AWS from "aws-sdk";
 import { Howl } from "howler";
+import { getPrompt, sendChatHistory } from "../APIs/api";
+import { uploadAudioToWhisper } from "../APIs/audio";
+import { textToSpeech } from "../APIs/textToSpeech";
 
 AWS.config.update({
   accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
@@ -95,29 +98,6 @@ const Chatbot = () => {
     }
   };
 
-  const sendChatHistory = async () => {
-    try {
-      const currentUser = await Auth.currentAuthenticatedUser();
-      const sub = currentUser.attributes.sub;
-
-      const apiName = 'SwiftReachAPI';
-      const path = "/history";
-      const data = {
-        body: {
-          userId: sub,
-          type: "chatbot",
-          history: chatHistoryRef.current,
-        },
-      };
-
-      await API.post(apiName, path, data);
-      console.log("Chat history sent successfully");
-    } catch (error) {
-      console.error("Error sending chat history", error);
-    }
-  };
-
-
   const startRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     mediaRecorder.current = new MediaRecorder(stream);
@@ -142,25 +122,6 @@ const Chatbot = () => {
     setIsRecording(false);
   };
 
-  const uploadAudioToWhisper = async (audioBlob) => {
-    const formData = new FormData();
-    formData.append('file', audioBlob, 'audio.webm');
-    formData.append('model', 'whisper-1');
-    try {
-      const response = await axios.post('https://api.openai.com/v1/audio/transcriptions', formData, {
-        headers: {
-          'Authorization': `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log(response)
-      return response.data.text;
-    } catch (error) {
-      console.log(error)
-    }
-  };
-
-
   useEffect(() => {
     const fetchPrompt = async () => {
       if (language && topic) {
@@ -183,19 +144,6 @@ const Chatbot = () => {
       sendChatHistory();
     };
   }, []); // Pass an empty array as the dependency to run the cleanup function only on unmount
-
-  const getPrompt = async (language, topic) => {
-    const apiName = 'SwiftReachAPI';
-    const path = '/prompt';
-    const queryParams = {
-      queryStringParameters: {
-        language: language,
-        topic: topic,
-      },
-    };
-    const response = await API.get(apiName, path, queryParams);
-    setPrompt(response[0].prompt);
-  };
 
   return (
     <Container maxWidth="lg">
@@ -337,36 +285,5 @@ const Chatbot = () => {
     </Container >
   );
 };
-
-const textToSpeech = async (text, language) => {
-  const voiceMapping = {
-    spanish: "Conchita",
-    french: "Celine",
-    german: "Marlene",
-  };
-
-  const polly = new Polly({
-    apiVersion: "2016-06-10",
-    region: process.env.REACT_APP_AWS_REGION,
-  });
-
-  const params = {
-    OutputFormat: "mp3",
-    SampleRate: "16000",
-    Text: text,
-    TextType: "text",
-    VoiceId: voiceMapping[language] || "Joanna",
-  };
-
-  try {
-    const data = await polly.synthesizeSpeech(params).promise();
-    const audioUrl = URL.createObjectURL(new Blob([data.AudioStream]));
-    console.log("Audio URL", audioUrl);
-    return audioUrl;
-  } catch (error) {
-    console.error("Error synthesizing speech", error);
-  }
-};
-
 
 export default Chatbot;
