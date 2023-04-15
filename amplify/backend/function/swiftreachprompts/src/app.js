@@ -51,11 +51,15 @@ app.get('/prompt', async function (req, res) {
   const queryParams = {
     TableName: tableName,
     IndexName: 'LanguageTopicIndex',
-    KeyConditionExpression: 'language = :language AND topic = :topic',
-    ExpressionAttributeValues: {
-      ':language': language,
-      ':topic': topic,
+    KeyConditionExpression: "#language = :language AND #topic = :topic",
+    ExpressionAttributeNames: {
+      "#language": "language",
+      "#topic": "topic"
     },
+    ExpressionAttributeValues: {
+      ":language": language,
+      ":topic": topic
+    }
   };
 
   try {

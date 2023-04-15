@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Container, Typography, Grid, Select, MenuItem, InputLabel, FormControl, AppBar, TextField, Switch, FormControlLabel, Box } from "@mui/material";
+import React, { useEffect } from "react";
+import { Button, Container, Typography, Grid, Select, MenuItem, InputLabel, FormControl, AppBar, TextField, Switch, FormControlLabel, Box, CircularProgress } from "@mui/material";
 import FaceIcon from "@mui/icons-material/Face";
 import MicIcon from "@mui/icons-material/Mic";
 import { fetchOpenAIResponse } from "../APIs/gpt";
@@ -12,7 +12,7 @@ const Chatbot = () => {
   const [inputText, setInputText] = React.useState("");
   const [chatHistory, setChatHistory] = React.useState([]);
   const [prompt, setPrompt] = React.useState("");
-
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const handleLanguageChange = (event) => {
     setLanguage(event.target.value);
@@ -35,6 +35,7 @@ const Chatbot = () => {
   const startChatbot = async () => {
     const openAIResponse = await fetchOpenAIResponse(prompt);
     setChatHistory([{ sender: "chatbot", message: openAIResponse }]);
+    console.log(chatHistory)
   };
 
   const handleSubmitResponse = async () => {
@@ -51,9 +52,21 @@ const Chatbot = () => {
     setInputText("");
   };
 
+  useEffect(() => {
+    const fetchPrompt = async () => {
+      if (language && topic) {
+        setIsLoading(true);
+        await getPrompt(language, topic);
+        setIsLoading(false);
+      }
+    };
+
+    fetchPrompt();
+  }, [language, topic]);
+
   const getPrompt = async (language, topic) => {
-    const apiName = 'yourApiName';
-    const path = '/prompts';
+    const apiName = 'SwiftReachAPI';
+    const path = '/prompt';
     const queryParams = {
       queryStringParameters: {
         language: language,
@@ -102,9 +115,15 @@ const Chatbot = () => {
         <Grid item xs={12}>
           <Grid container justifyContent="space-between" alignItems="center">
             <Grid item>
-              <Button color="secondary" variant="contained" onClick={startChatbot}>
-                Start Chatbot
-              </Button>
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={startChatbot}
+              disabled={!prompt || isLoading}
+            >
+              Start Chatbot
+            </Button>
+              {isLoading && <CircularProgress size={24} />}
             </Grid>
             <Grid item>
               <FormControlLabel
