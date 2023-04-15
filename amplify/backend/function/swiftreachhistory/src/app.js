@@ -54,6 +54,7 @@ app.get('/history', function(req, res) {
 
 app.post('/history', function(req, res) {
   const { userId, type, history } = req.body;
+  if (histrory.length === 0) res.status(200).json({ success: "No history to save" });
 
   const newItem = {
     id: uuidv4(),

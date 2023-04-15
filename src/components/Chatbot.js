@@ -23,6 +23,7 @@ const Chatbot = () => {
   const [aiVoice, setAiVoice] = useState(true);
   const [inputText, setInputText] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
+  const chatHistoryRef = useRef(chatHistory);
   const [prompt, setPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
@@ -98,17 +99,17 @@ const Chatbot = () => {
     try {
       const currentUser = await Auth.currentAuthenticatedUser();
       const sub = currentUser.attributes.sub;
-  
+
       const apiName = 'SwiftReachAPI';
-      const path = "/history"; 
+      const path = "/history";
       const data = {
         body: {
           userId: sub,
           type: "chatbot",
-          history: chatHistory,
+          history: chatHistoryRef.current,
         },
       };
-  
+
       await API.post(apiName, path, data);
       console.log("Chat history sent successfully");
     } catch (error) {
@@ -171,6 +172,10 @@ const Chatbot = () => {
 
     fetchPrompt();
   }, [language, topic]);
+
+  useEffect(() => {
+    chatHistoryRef.current = chatHistory; // Update the ref whenever chatHistory changes
+  }, [chatHistory]);
 
   useEffect(() => {
     return () => {
