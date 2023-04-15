@@ -12,6 +12,7 @@ const AWS = require('aws-sdk')
 const awsServerlessExpressMiddleware = require('aws-serverless-express/middleware')
 const bodyParser = require('body-parser')
 const express = require('express')
+const { v4: uuidv4 } = require('uuid');
 
 AWS.config.update({ region: process.env.TABLE_REGION });
 
@@ -34,17 +35,71 @@ app.use(function(req, res, next) {
   next()
 });
 
-
 app.get('/history', function(req, res) {
+  const { userId, type } = req.query;
   
+  const params = {
+    TableName: tableName,
+    FilterExpression: "userId = :userId AND #type = :type",
+    ExpressionAttributeNames: {
+      "#type": "type"
+    },
+    ExpressionAttributeValues: {
+      ":userId": userId,
+      ":type": type
+    }
+  };
+
+  dynamodb.scan(params, (err, data) => {
+    if (err) {
+      res.status(500).json({ error: "Error fetching history" });
+    } else {
+      res.json(data.Items);
+    }
+  });
 });
 
 app.post('/history', function(req, res) {
+  const { userId, type, history } = req.body;
 
+  const newItem = {
+    id: uuidv4(),
+    userId,
+    type,
+    history
+  };
+
+  const params = {
+    TableName: tableName,
+    Item: newItem
+  };
+
+  dynamodb.put(params, (err, data) => {
+    if (err) {
+      res.status(500).json({ error: "Error saving history" });
+    } else {
+      res.json(newItem);
+    }
+  });
 });
 
-app.delete('/history', function(req, res) {
-  
+app.delete('/history/:id', function(req, res) {
+  const { id } = req.params;
+
+  const params = {
+    TableName: tableName,
+    Key: {
+      id
+    }
+  };
+
+  dynamodb.delete(params, (err, data) => {
+    if (err) {
+      res.status(500).json({ error: "Error deleting history" });
+    } else {
+      res.json({ success: "History deleted", id: uuid });
+    }
+  });
 });
 
 app.listen(3000, function() {

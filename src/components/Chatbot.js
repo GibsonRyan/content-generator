@@ -100,13 +100,12 @@ const Chatbot = () => {
       const sub = currentUser.attributes.sub;
   
       const apiName = 'SwiftReachAPI';
-      const path = "/yourPath"; // Replace with your API path
-  
+      const path = "/history"; 
       const data = {
         body: {
-          sub,
+          userId: sub,
           type: "chatbot",
-          chatHistory,
+          history: chatHistory,
         },
       };
   
