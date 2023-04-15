@@ -60,10 +60,26 @@ const Chatbot = () => {
     setInputText(event.target.value);
   };
 
+  const playAiVoice = async (responseText) => {
+    if (aiVoice) {
+      if (audioPlayer) {
+        audioPlayer.stop();
+      }
+      const audioUrl = await textToSpeech(responseText, language);
+      const player = new Howl({
+        src: [audioUrl],
+        html5: true, // Add this line to force HTML5 Audio, it might help with playback issues
+        onend: () => console.log("Playback has finished."),
+      });
+      player.play();
+      setAudioPlayer(player);
+    }
+  };
+
   const startChatbot = async () => {
     const openAIResponse = await fetchOpenAIResponse(prompt, [], 'system');
     setChatHistory([{ role: "system", content: prompt }, { role: "assistant", content: openAIResponse }]);
-    console.log(chatHistory)
+    await playAiVoice(openAIResponse);
   };
 
   const handleSubmitResponse = async () => {
@@ -76,23 +92,8 @@ const Chatbot = () => {
       { role: "assistant", content: openAIResponse },
     ]);
 
-    // Clear the input field
     setInputText("");
-
-    // Use Amazon Polly to play the audio if the AI voice toggle is enabled
-    if (aiVoice) {
-      if (audioPlayer) {
-        audioPlayer.stop();
-      }
-      const audioUrl = await textToSpeech(openAIResponse, language);
-      const player = new Howl({
-        src: [audioUrl],
-        html5: true, // Add this line to force HTML5 Audio, it might help with playback issues
-        onend: () => console.log("Playback has finished."),
-      });
-      player.play();
-      setAudioPlayer(player);
-    }
+    await playAiVoice(openAIResponse);
   };
 
   const startRecording = async () => {
