@@ -3,7 +3,7 @@ import { Button, Container, Typography, Grid, Select, MenuItem, InputLabel, Form
 import FaceIcon from "@mui/icons-material/Face";
 import MicIcon from "@mui/icons-material/Mic";
 import { fetchOpenAIResponse } from "../APIs/gpt";
-import { API } from "aws-amplify";
+import { API, Auth } from "aws-amplify";
 import axios from "axios";
 import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -94,6 +94,29 @@ const Chatbot = () => {
     }
   };
 
+  const sendChatHistory = async () => {
+    try {
+      const currentUser = await Auth.currentAuthenticatedUser();
+      const sub = currentUser.attributes.sub;
+  
+      const apiName = 'SwiftReachAPI';
+      const path = "/yourPath"; // Replace with your API path
+  
+      const data = {
+        body: {
+          sub,
+          type: "chatbot",
+          chatHistory,
+        },
+      };
+  
+      await API.post(apiName, path, data);
+      console.log("Chat history sent successfully");
+    } catch (error) {
+      console.error("Error sending chat history", error);
+    }
+  };
+
 
   const startRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -149,6 +172,13 @@ const Chatbot = () => {
 
     fetchPrompt();
   }, [language, topic]);
+
+  useEffect(() => {
+    return () => {
+      // This function will be called when the component is unmounted
+      sendChatHistory();
+    };
+  }, []); // Pass an empty array as the dependency to run the cleanup function only on unmount
 
   const getPrompt = async (language, topic) => {
     const apiName = 'SwiftReachAPI';
