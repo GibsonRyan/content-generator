@@ -192,6 +192,9 @@ const Chatbot = () => {
                 }
                 label="AI Voice"
               />
+              <Typography variant="caption" sx={{ color: 'info.main' }}>
+                Disclaimer: The AI voice will be optimized for the Chatbot's selected language, not English
+              </Typography>
             </Grid>
           </Grid>
         </Grid>
@@ -243,11 +246,15 @@ const Chatbot = () => {
               />
             </Grid>
             <Grid item>
-              {isRecording ? (
-                <MicOffIcon onClick={handleMicIconClick} />
-              ) : (
-                <MicIcon onClick={handleMicIconClick} />
-              )}
+              <MicIcon
+                onClick={handleMicIconClick}
+                sx={{
+                  color: isRecording ? 'primary.main' : 'grey.400',
+                  '&:hover': { color: 'white' },
+                  cursor: 'pointer',
+                  fontSize: "2rem",
+                }}
+              />
             </Grid>
           </Grid>
         </Grid>
