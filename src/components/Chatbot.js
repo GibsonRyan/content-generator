@@ -3,11 +3,8 @@ import { Button, Container, Typography, Grid, Select, MenuItem, InputLabel, Form
 import FaceIcon from "@mui/icons-material/Face";
 import MicIcon from "@mui/icons-material/Mic";
 import { fetchOpenAIResponse } from "../APIs/gpt";
-import { API, Auth } from "aws-amplify";
-import axios from "axios";
 import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Polly } from "aws-sdk";
 import AWS from "aws-sdk";
 import { Howl } from "howler";
 import { getPrompt, sendChatHistory } from "../APIs/api";
