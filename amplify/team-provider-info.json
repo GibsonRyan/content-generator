@@ -28,6 +28,9 @@
       },
       "storage": {
         "SwiftReachPrompts": {}
+      },
+      "api": {
+        "SwiftReachAPI": {}
       }
     }
   }

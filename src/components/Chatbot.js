@@ -3,6 +3,7 @@ import { Button, Container, Typography, Grid, Select, MenuItem, InputLabel, Form
 import FaceIcon from "@mui/icons-material/Face";
 import MicIcon from "@mui/icons-material/Mic";
 import { fetchOpenAIResponse } from "../APIs/gpt";
+import { API } from "aws-amplify";
 
 const Chatbot = () => {
   const [language, setLanguage] = React.useState("");
@@ -48,6 +49,19 @@ const Chatbot = () => {
 
     // Clear the input field
     setInputText("");
+  };
+
+  const getPrompt = async (language, topic) => {
+    const apiName = 'yourApiName';
+    const path = '/prompts';
+    const queryParams = {
+      queryStringParameters: {
+        language: language,
+        topic: topic,
+      },
+    };
+    const response = await API.get(apiName, path, queryParams);
+    console.log(response);
   };
 
   return (
