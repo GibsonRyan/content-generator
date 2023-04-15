@@ -4,7 +4,7 @@ import { Configuration, OpenAIApi } from "openai";
 
 const configuration = new Configuration({
   organization: "org-G3FPFBv5pNTvhDynPn9CYhH7",
-  apiKey: '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',
+  apiKey: process.env.REACT_APP_OPENAI_API_KEY,
 });
 
 delete configuration.baseOptions.headers['User-Agent']

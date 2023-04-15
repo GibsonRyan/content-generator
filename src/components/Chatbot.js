@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Button, Container, Typography, Grid, Select, MenuItem, InputLabel, FormControl, AppBar, TextField, Switch, FormControlLabel, Box, CircularProgress } from "@mui/material";
+import { Button, Container, Typography, Grid, Select, MenuItem, InputLabel, FormControl, AppBar, TextField, Switch, FormControlLabel, Box, CircularProgress, List, ListItem } from "@mui/material";
 import FaceIcon from "@mui/icons-material/Face";
 import MicIcon from "@mui/icons-material/Mic";
 import { fetchOpenAIResponse } from "../APIs/gpt";
@@ -115,14 +115,14 @@ const Chatbot = () => {
         <Grid item xs={12}>
           <Grid container justifyContent="space-between" alignItems="center">
             <Grid item>
-            <Button
-              color="secondary"
-              variant="contained"
-              onClick={startChatbot}
-              disabled={!prompt || isLoading}
-            >
-              Start Chatbot
-            </Button>
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={startChatbot}
+                disabled={!prompt || isLoading}
+              >
+                Start Chatbot
+              </Button>
               {isLoading && <CircularProgress size={24} />}
             </Grid>
             <Grid item>
@@ -158,7 +158,20 @@ const Chatbot = () => {
               overflowY: "auto",
             }}
           >
-            {/* Render the chatbot text here */}
+            <List>
+              {chatHistory.slice(1).map((message, index) => (
+                <ListItem key={index}>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      color: message.sender === "assistant" ? "info.main" : "white",
+                    }}
+                  >
+                    {message.message}
+                  </Typography>
+                </ListItem>
+              ))}
+            </List>
           </Box>
         </Grid>
         <Grid item xs={12}>
