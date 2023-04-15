@@ -7,7 +7,14 @@ import { API } from "aws-amplify";
 import axios from "axios";
 import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { Polly, Config } from "aws-sdk";
+import { Howl } from "howler";
 
+Config.update({
+  accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+  region: process.env.REACT_APP_AWS_REGION,
+});
 
 const Chatbot = () => {
   const [language, setLanguage] = useState("");
@@ -19,8 +26,13 @@ const Chatbot = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorder = useRef(null);
+  const [audioPlayer, setAudioPlayer] = useState(null);
 
   const handleMicIconClick = async () => {
+    if (audioPlayer) {
+      audioPlayer.stop();
+    }
+
     if (!isRecording) {
       startRecording();
     } else {
@@ -53,7 +65,7 @@ const Chatbot = () => {
   };
 
   const handleSubmitResponse = async () => {
-    const openAIResponse = await fetchOpenAIResponse(inputText, chatHistory, 'user');
+    const openAIResponse = await fetchOpenAIResponse(inputText, chatHistory, "user");
 
     // Update the chat history with the user's content and the API response
     setChatHistory((prevChatHistory) => [
@@ -64,7 +76,19 @@ const Chatbot = () => {
 
     // Clear the input field
     setInputText("");
+
+    // Use Amazon Polly to play the audio if the AI voice toggle is enabled
+    if (aiVoice) {
+      if (audioPlayer) {
+        audioPlayer.stop();
+      }
+      const audioUrl = await textToSpeech(openAIResponse, language);
+      const player = new Howl({ src: [audioUrl] });
+      player.play();
+      setAudioPlayer(player);
+    }
   };
+
 
   const startRecording = async () => {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -274,5 +298,35 @@ const Chatbot = () => {
     </Container >
   );
 };
+
+const textToSpeech = async (text, language) => {
+  const voiceMapping = {
+    spanish: "Conchita",
+    french: "Celine",
+    german: "Marlene",
+  };
+
+  const polly = new Polly({
+    apiVersion: "2016-06-10",
+    region: process.env.REACT_APP_AWS_REGION,
+  });
+
+  const params = {
+    OutputFormat: "mp3",
+    SampleRate: "16000",
+    Text: text,
+    TextType: "text",
+    VoiceId: voiceMapping[language] || "Joanna",
+  };
+
+  try {
+    const data = await polly.synthesizeSpeech(params).promise();
+    const audioUrl = URL.createObjectURL(new Blob([data.AudioStream]));
+    return audioUrl;
+  } catch (error) {
+    console.error("Error synthesizing speech", error);
+  }
+};
+
 
 export default Chatbot;
