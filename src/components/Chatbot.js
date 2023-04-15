@@ -33,19 +33,19 @@ const Chatbot = () => {
   };
 
   const startChatbot = async () => {
-    const openAIResponse = await fetchOpenAIResponse(prompt);
-    setChatHistory([{ sender: "chatbot", message: openAIResponse }]);
+    const openAIResponse = await fetchOpenAIResponse(prompt, [], 'system');
+    setChatHistory([{ sender: "system", message: prompt }, { sender: "assistant", message: openAIResponse }]);
     console.log(chatHistory)
   };
 
   const handleSubmitResponse = async () => {
-    const openAIResponse = await fetchOpenAIResponse(inputText);
+    const openAIResponse = await fetchOpenAIResponse(inputText, chatHistory, 'user');
 
     // Update the chat history with the user's message and the API response
     setChatHistory((prevChatHistory) => [
       ...prevChatHistory,
       { sender: "user", message: inputText },
-      { sender: "chatbot", message: openAIResponse },
+      { sender: "assistant", message: openAIResponse },
     ]);
 
     // Clear the input field
@@ -74,7 +74,7 @@ const Chatbot = () => {
       },
     };
     const response = await API.get(apiName, path, queryParams);
-    console.log(response);
+    setPrompt(response[0].prompt);
   };
 
   return (
@@ -88,9 +88,9 @@ const Chatbot = () => {
             <InputLabel sx={{ color: 'white' }}>Select Language</InputLabel>
             <Select value={language} onChange={handleLanguageChange}>
               {/* Add available languages as MenuItems here */}
-              <MenuItem sx={{ color: 'black' }} value="es">Spanish</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="fr">French</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="gm">German</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="spanish">Spanish</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="french">French</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="german">German</MenuItem>
             </Select>
           </FormControl>
         </Grid>

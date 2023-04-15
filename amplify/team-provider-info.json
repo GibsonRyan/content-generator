@@ -23,7 +23,7 @@
       "function": {
         "swiftreachprompts": {
           "deploymentBucketName": "amplify-contentgenerator-dev-141520-deployment",
-          "s3Key": "amplify-builds/swiftreachprompts-6c31653072484c484135-build.zip"
+          "s3Key": "amplify-builds/swiftreachprompts-6c626e47343553637446-build.zip"
         }
       },
       "storage": {
