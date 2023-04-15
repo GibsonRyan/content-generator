@@ -106,6 +106,22 @@
         }
       ]
     },
+    "AMPLIFY_function_swiftreachhistory_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "swiftreachhistory"
+        }
+      ]
+    },
+    "AMPLIFY_function_swiftreachhistory_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "swiftreachhistory"
+        }
+      ]
+    },
     "AMPLIFY_function_swiftreachprompts_deploymentBucketName": {
       "usedBy": [
         {
