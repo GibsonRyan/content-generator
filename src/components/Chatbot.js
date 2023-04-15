@@ -34,18 +34,18 @@ const Chatbot = () => {
 
   const startChatbot = async () => {
     const openAIResponse = await fetchOpenAIResponse(prompt, [], 'system');
-    setChatHistory([{ sender: "system", message: prompt }, { sender: "assistant", message: openAIResponse }]);
+    setChatHistory([{ role: "system", content: prompt }, { role: "assistant", content: openAIResponse }]);
     console.log(chatHistory)
   };
 
   const handleSubmitResponse = async () => {
     const openAIResponse = await fetchOpenAIResponse(inputText, chatHistory, 'user');
 
-    // Update the chat history with the user's message and the API response
+    // Update the chat history with the user's content and the API response
     setChatHistory((prevChatHistory) => [
       ...prevChatHistory,
-      { sender: "user", message: inputText },
-      { sender: "assistant", message: openAIResponse },
+      { role: "user", content: inputText },
+      { role: "assistant", content: openAIResponse },
     ]);
 
     // Clear the input field
@@ -144,7 +144,7 @@ const Chatbot = () => {
             <Grid container alignItems="center" justifyContent="center">
               <FaceIcon
                 sx={{
-                  fontSize: "3rem", // Increase the FaceIcon size by adjusting the fontSize value
+                  fontSize: "3rem", 
                 }}
               />
             </Grid>
@@ -164,10 +164,10 @@ const Chatbot = () => {
                   <Typography
                     variant="body1"
                     sx={{
-                      color: message.sender === "assistant" ? "info.main" : "white",
+                      color: message.role === "assistant" ? "info.main" : "white",
                     }}
                   >
-                    {message.message}
+                    {message.content}
                   </Typography>
                 </ListItem>
               ))}
