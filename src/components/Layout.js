@@ -78,7 +78,7 @@ const Layout = () => {
               <ListItemIcon>
                 <ChatBubbleIcon style={{ color: "White"}}/>
               </ListItemIcon>
-              <ListItemText primary="Chatbot" />
+              <ListItemText primary="Conversations" />
             </ListItemButton>
             <ListItemButton onClick={() => navigate("/live-translate")}>
               <ListItemIcon>

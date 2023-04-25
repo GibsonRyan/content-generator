@@ -1,11 +1,19 @@
-import { Polly } from "aws-sdk";
+const franc = require('franc');
+const langs = require('langs');
+const Polly = require('aws-sdk/clients/polly');
 
-export const textToSpeech = async (text, language) => {
+export const textToSpeech = async (text, language = null) => {
   const voiceMapping = {
-    spanish: "Conchita",
-    french: "Celine",
-    german: "Marlene",
+    es: "Conchita", 
+    fr: "Celine", 
+    de: "Marlene", 
   };
+
+  if (!language) {
+    const detectedLanguage = franc(text);
+    const languageInfo = langs.where('3', detectedLanguage);
+    language = languageInfo && languageInfo['1'];
+  }
 
   const polly = new Polly({
     apiVersion: "2016-06-10",

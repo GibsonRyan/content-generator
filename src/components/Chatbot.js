@@ -147,16 +147,16 @@ const Chatbot = () => {
     <Container maxWidth="lg">
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <Typography variant="h4">Chatbot</Typography>
+          <Typography variant="h4">Conversation Simulator</Typography>
         </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth>
             <InputLabel sx={{ color: 'white' }}>Select Language</InputLabel>
             <Select value={language} onChange={handleLanguageChange}>
               {/* Add available languages as MenuItems here */}
-              <MenuItem sx={{ color: 'black' }} value="spanish">Spanish</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="french">French</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="german">German</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="es">Spanish</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="fr">French</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="de">German</MenuItem>
             </Select>
           </FormControl>
         </Grid>
