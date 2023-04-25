@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"11.0.3\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+  "Description": "Lambda Function resource stack creation using Amplify CLI",
   "Parameters": {
     "CloudWatchRule": {
       "Type": "String",
@@ -16,17 +16,17 @@
     "s3Key": {
       "Type": "String"
     },
-    "storageSwiftReachPromptsName": {
+    "storageSwiftReachPromptsdevName": {
       "Type": "String",
-      "Default": "storageSwiftReachPromptsName"
+      "Default": "storageSwiftReachPromptsdevName"
     },
-    "storageSwiftReachPromptsArn": {
+    "storageSwiftReachPromptsdevArn": {
       "Type": "String",
-      "Default": "storageSwiftReachPromptsArn"
+      "Default": "storageSwiftReachPromptsdevArn"
     },
-    "storageSwiftReachPromptsStreamArn": {
+    "storageSwiftReachPromptsdevStreamArn": {
       "Type": "String",
-      "Default": "storageSwiftReachPromptsStreamArn"
+      "Default": "storageSwiftReachPromptsdevStreamArn"
     }
   },
   "Conditions": {
@@ -82,14 +82,14 @@
             "REGION": {
               "Ref": "AWS::Region"
             },
-            "STORAGE_SWIFTREACHPROMPTS_NAME": {
-              "Ref": "storageSwiftReachPromptsName"
+            "STORAGE_SWIFTREACHPROMPTSDEV_NAME": {
+              "Ref": "storageSwiftReachPromptsdevName"
             },
-            "STORAGE_SWIFTREACHPROMPTS_ARN": {
-              "Ref": "storageSwiftReachPromptsArn"
+            "STORAGE_SWIFTREACHPROMPTSDEV_ARN": {
+              "Ref": "storageSwiftReachPromptsdevArn"
             },
-            "STORAGE_SWIFTREACHPROMPTS_STREAMARN": {
-              "Ref": "storageSwiftReachPromptsStreamArn"
+            "STORAGE_SWIFTREACHPROMPTSDEV_STREAMARN": {
+              "Ref": "storageSwiftReachPromptsdevStreamArn"
             }
           }
         },
@@ -110,12 +110,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "contentgeneratorLambdaRole7634fb72",
+            "swiftreachLambdaRole18894ce0",
             {
               "Fn::Join": [
                 "",
                 [
-                  "contentgeneratorLambdaRole7634fb72",
+                  "swiftreachLambdaRole18894ce0",
                   "-",
                   {
                     "Ref": "env"
@@ -181,34 +181,6 @@
                   }
                 ]
               }
-            },
-            {
-              "Effect": "Allow",
-              "Action": [
-                "dynamodb:DescribeTable",
-                "dynamodb:GetItem",
-                "dynamodb:Query",
-                "dynamodb:Scan",
-                "dynamodb:PutItem",
-                "dynamodb:UpdateItem",
-                "dynamodb:DeleteItem"
-              ],
-              "Resource": [
-                {
-                  "Ref": "storageSwiftReachPromptsArn"
-                },
-                {
-                  "Fn::Join": [
-                    "/",
-                    [
-                      {
-                        "Ref": "storageSwiftReachPromptsArn"
-                      },
-                      "index/*"
-                    ]
-                  ]
-                }
-              ]
             }
           ]
         }
@@ -232,23 +204,29 @@
             {
               "Effect": "Allow",
               "Action": [
+                "dynamodb:Put*",
+                "dynamodb:Create*",
+                "dynamodb:BatchWriteItem",
                 "dynamodb:Get*",
                 "dynamodb:BatchGetItem",
                 "dynamodb:List*",
                 "dynamodb:Describe*",
                 "dynamodb:Scan",
-                "dynamodb:Query"
+                "dynamodb:Query",
+                "dynamodb:Update*",
+                "dynamodb:RestoreTable*",
+                "dynamodb:Delete*"
               ],
               "Resource": [
                 {
-                  "Ref": "storageSwiftReachPromptsArn"
+                  "Ref": "storageSwiftReachPromptsdevArn"
                 },
                 {
                   "Fn::Join": [
                     "/",
                     [
                       {
-                        "Ref": "storageSwiftReachPromptsArn"
+                        "Ref": "storageSwiftReachPromptsdevArn"
                       },
                       "index/*"
                     ]
@@ -283,14 +261,6 @@
     "LambdaExecutionRole": {
       "Value": {
         "Ref": "LambdaExecutionRole"
-      }
-    },
-    "LambdaExecutionRoleArn": {
-      "Value": {
-        "Fn::GetAtt": [
-          "LambdaExecutionRole",
-          "Arn"
-        ]
       }
     }
   }

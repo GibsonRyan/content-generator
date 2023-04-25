@@ -1,10 +1,13 @@
 {
+  "lambdaLayers": [],
   "permissions": {
     "storage": {
-      "SwiftReachPrompts": [
-        "read"
+      "SwiftReachPromptsdev": [
+        "create",
+        "read",
+        "update",
+        "delete"
       ]
     }
-  },
-  "lambdaLayers": []
+  }
 }

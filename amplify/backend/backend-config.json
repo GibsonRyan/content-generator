@@ -1,6 +1,6 @@
 {
   "api": {
-    "SwiftReachAPI": {
+    "SwiftAPI": {
       "dependsOn": [
         {
           "attributes": [
@@ -8,7 +8,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "swiftreachprompts"
+          "resourceName": "swiftreachhistory"
         },
         {
           "attributes": [
@@ -16,7 +16,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "swiftreachhistory"
+          "resourceName": "swiftreachprompts"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -24,7 +24,7 @@
     }
   },
   "auth": {
-    "contentgeneratorb8a33bed": {
+    "swiftreach82cda444": {
       "customAuth": false,
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
@@ -37,13 +37,10 @@
       "build": true,
       "dependsOn": [
         {
-          "attributeEnvMap": {
-            "Arn": "TABLE_ARN",
-            "Name": "TABLE_NAME"
-          },
           "attributes": [
             "Name",
-            "Arn"
+            "Arn",
+            "StreamArn"
           ],
           "category": "storage",
           "resourceName": "SwiftReachHistory"
@@ -56,25 +53,13 @@
       "build": true,
       "dependsOn": [
         {
-          "attributeEnvMap": {
-            "Arn": "TABLE_ARN",
-            "Name": "TABLE_NAME"
-          },
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "storage",
-          "resourceName": "SwiftReachPrompts"
-        },
-        {
           "attributes": [
             "Name",
             "Arn",
             "StreamArn"
           ],
           "category": "storage",
-          "resourceName": "SwiftReachPrompts"
+          "resourceName": "SwiftReachPromptsdev"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -82,67 +67,35 @@
     }
   },
   "parameters": {
-    "AMPLIFY_auth_contentgeneratorb8a33bed_nativeClientId": {
+    "AMPLIFY_auth_swiftreach82cda444_nativeClientId": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "contentgeneratorb8a33bed"
+          "resourceName": "swiftreach82cda444"
         }
       ]
     },
-    "AMPLIFY_auth_contentgeneratorb8a33bed_userPoolId": {
+    "AMPLIFY_auth_swiftreach82cda444_userPoolId": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "contentgeneratorb8a33bed"
+          "resourceName": "swiftreach82cda444"
         }
       ]
     },
-    "AMPLIFY_auth_contentgeneratorb8a33bed_userPoolName": {
+    "AMPLIFY_auth_swiftreach82cda444_userPoolName": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "contentgeneratorb8a33bed"
+          "resourceName": "swiftreach82cda444"
         }
       ]
     },
-    "AMPLIFY_auth_contentgeneratorb8a33bed_webClientId": {
+    "AMPLIFY_auth_swiftreach82cda444_webClientId": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "contentgeneratorb8a33bed"
-        }
-      ]
-    },
-    "AMPLIFY_function_swiftreachhistory_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "swiftreachhistory"
-        }
-      ]
-    },
-    "AMPLIFY_function_swiftreachhistory_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "swiftreachhistory"
-        }
-      ]
-    },
-    "AMPLIFY_function_swiftreachprompts_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "swiftreachprompts"
-        }
-      ]
-    },
-    "AMPLIFY_function_swiftreachprompts_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "swiftreachprompts"
+          "resourceName": "swiftreach82cda444"
         }
       ]
     },
@@ -178,27 +131,59 @@
         }
       ]
     },
-    "AMPLIFY_storage_SwiftReachHistory_sortKeyName": {
-      "usedBy": [
-        {
-          "category": "storage",
-          "resourceName": "SwiftReachHistory"
-        }
-      ]
-    },
-    "AMPLIFY_storage_SwiftReachHistory_sortKeyType": {
-      "usedBy": [
-        {
-          "category": "storage",
-          "resourceName": "SwiftReachHistory"
-        }
-      ]
-    },
     "AMPLIFY_storage_SwiftReachHistory_tableName": {
       "usedBy": [
         {
           "category": "storage",
           "resourceName": "SwiftReachHistory"
+        }
+      ]
+    },
+    "AMPLIFY_storage_SwiftReachPromptsdev_arn": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "SwiftReachPromptsdev"
+        }
+      ]
+    },
+    "AMPLIFY_storage_SwiftReachPromptsdev_partitionKeyName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "SwiftReachPromptsdev"
+        }
+      ]
+    },
+    "AMPLIFY_storage_SwiftReachPromptsdev_partitionKeyType": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "SwiftReachPromptsdev"
+        }
+      ]
+    },
+    "AMPLIFY_storage_SwiftReachPromptsdev_region": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "SwiftReachPromptsdev"
+        }
+      ]
+    },
+    "AMPLIFY_storage_SwiftReachPromptsdev_streamArn": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "SwiftReachPromptsdev"
+        }
+      ]
+    },
+    "AMPLIFY_storage_SwiftReachPromptsdev_tableName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "SwiftReachPromptsdev"
         }
       ]
     }
@@ -210,9 +195,11 @@
       "service": "DynamoDB",
       "serviceType": "imported"
     },
-    "SwiftReachPrompts": {
+    "SwiftReachPromptsdev": {
+      "dependsOn": [],
       "providerPlugin": "awscloudformation",
-      "service": "DynamoDB"
+      "service": "DynamoDB",
+      "serviceType": "imported"
     }
   }
 }

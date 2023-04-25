@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "paths": {
+    "/history": {
+      "name": "/history",
+      "lambdaFunction": "swiftreachhistory",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/prompt": {
+      "name": "/prompt",
+      "lambdaFunction": "swiftreachprompts",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}
