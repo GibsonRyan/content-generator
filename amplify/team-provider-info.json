@@ -19,6 +19,31 @@
           "webClientId": "7igjc5q0ugl7rbp9atcm2qp5mb",
           "nativeClientId": "po99f6lm457dlilc76kf9mmtu"
         }
+      },
+      "function": {
+        "swiftreachprompts": {
+          "deploymentBucketName": "amplify-contentgenerator-dev-141520-deployment",
+          "s3Key": "amplify-builds/swiftreachprompts-6c626e47343553637446-build.zip"
+        },
+        "swiftreachhistory": {
+          "deploymentBucketName": "amplify-contentgenerator-dev-141520-deployment",
+          "s3Key": "amplify-builds/swiftreachhistory-69707148533555687777-build.zip"
+        }
+      },
+      "storage": {
+        "SwiftReachPrompts": {},
+        "SwiftReachHistory": {
+          "tableName": "SwiftReachHistory",
+          "region": "us-east-1",
+          "arn": "arn:aws:dynamodb:us-east-1:783533502506:table/SwiftReachHistory",
+          "partitionKeyName": "id",
+          "partitionKeyType": "S",
+          "sortKeyName": "type",
+          "sortKeyType": "S"
+        }
+      },
+      "api": {
+        "SwiftReachAPI": {}
       }
     }
   }
