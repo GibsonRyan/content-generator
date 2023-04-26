@@ -30,11 +30,11 @@
         "swiftreachhistory": {},
         "swiftreachprompts": {
           "deploymentBucketName": "amplify-amplifydab2d7ed07784-staging-214854-deployment",
-          "s3Key": "amplify-builds/swiftreachprompts-78556a70797a63644f7a-build.zip"
+          "s3Key": "amplify-builds/swiftreachprompts-4c67506d415545753239-build.zip"
         },
         "swiftReachHistory": {
           "deploymentBucketName": "amplify-amplifydab2d7ed07784-staging-214854-deployment",
-          "s3Key": "amplify-builds/swiftReachHistory-3336763775474f677a48-build.zip"
+          "s3Key": "amplify-builds/swiftReachHistory-4c6175506f7345726235-build.zip"
         }
       },
       "storage": {
