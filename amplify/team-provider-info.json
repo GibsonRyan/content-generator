@@ -1,19 +1,25 @@
 {
-  "dev": {
+  "staging": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-contentgenerator-dev-141520-authRole",
-      "UnauthRoleArn": "arn:aws:iam::783533502506:role/amplify-contentgenerator-dev-141520-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::783533502506:role/amplify-contentgenerator-dev-141520-authRole",
+      "AuthRoleName": "amplify-amplifydab2d7ed07784-staging-214854-authRole",
+      "UnauthRoleArn": "arn:aws:iam::783533502506:role/amplify-amplifydab2d7ed07784-staging-214854-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::783533502506:role/amplify-amplifydab2d7ed07784-staging-214854-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-contentgenerator-dev-141520-deployment",
-      "UnauthRoleName": "amplify-contentgenerator-dev-141520-unauthRole",
-      "StackName": "amplify-contentgenerator-dev-141520",
-      "StackId": "arn:aws:cloudformation:us-east-1:783533502506:stack/amplify-contentgenerator-dev-141520/430c7ef0-d25c-11ed-b21f-0ae554643d05",
-      "AmplifyAppId": "dbfz4n0umasmp"
+      "DeploymentBucketName": "amplify-amplifydab2d7ed07784-staging-214854-deployment",
+      "UnauthRoleName": "amplify-amplifydab2d7ed07784-staging-214854-unauthRole",
+      "StackName": "amplify-amplifydab2d7ed07784-staging-214854",
+      "StackId": "arn:aws:cloudformation:us-east-1:783533502506:stack/amplify-amplifydab2d7ed07784-staging-214854/f97a2950-e3b2-11ed-8d70-0ab8d23d9cf5",
+      "AmplifyAppId": "d1ykvy2gohz303"
     },
     "categories": {
       "auth": {
-        "contentgeneratorb8a33bed": {
+        "swiftreach82cda444": {
+          "userPoolId": "us-east-1_EcHBow0LR",
+          "userPoolName": "SwiftReach-users",
+          "webClientId": "7igjc5q0ugl7rbp9atcm2qp5mb",
+          "nativeClientId": "po99f6lm457dlilc76kf9mmtu"
+        },
+        "swiftreach7e355c14": {
           "userPoolId": "us-east-1_EcHBow0LR",
           "userPoolName": "SwiftReach-users",
           "webClientId": "7igjc5q0ugl7rbp9atcm2qp5mb",
@@ -21,29 +27,36 @@
         }
       },
       "function": {
+        "swiftreachhistory": {},
         "swiftreachprompts": {
-          "deploymentBucketName": "amplify-contentgenerator-dev-141520-deployment",
-          "s3Key": "amplify-builds/swiftreachprompts-6c626e47343553637446-build.zip"
+          "deploymentBucketName": "amplify-amplifydab2d7ed07784-staging-214854-deployment",
+          "s3Key": "amplify-builds/swiftreachprompts-78556a70797a63644f7a-build.zip"
         },
-        "swiftreachhistory": {
-          "deploymentBucketName": "amplify-contentgenerator-dev-141520-deployment",
-          "s3Key": "amplify-builds/swiftreachhistory-69707148533555687777-build.zip"
+        "swiftReachHistory": {
+          "deploymentBucketName": "amplify-amplifydab2d7ed07784-staging-214854-deployment",
+          "s3Key": "amplify-builds/swiftReachHistory-3336763775474f677a48-build.zip"
         }
       },
       "storage": {
-        "SwiftReachPrompts": {},
         "SwiftReachHistory": {
           "tableName": "SwiftReachHistory",
           "region": "us-east-1",
           "arn": "arn:aws:dynamodb:us-east-1:783533502506:table/SwiftReachHistory",
           "partitionKeyName": "id",
           "partitionKeyType": "S",
-          "sortKeyName": "type",
-          "sortKeyType": "S"
+          "streamArn": "arn:aws:dynamodb:us-east-1:783533502506:table/SwiftReachHistory/stream/2023-04-25T22:33:49.026"
+        },
+        "SwiftReachPromptsdev": {
+          "tableName": "SwiftReachPrompts-dev",
+          "region": "us-east-1",
+          "arn": "arn:aws:dynamodb:us-east-1:783533502506:table/SwiftReachPrompts-dev",
+          "streamArn": "arn:aws:dynamodb:us-east-1:783533502506:table/SwiftReachPrompts-dev/stream/2023-04-14T19:56:18.595",
+          "partitionKeyName": "id",
+          "partitionKeyType": "S"
         }
       },
       "api": {
-        "SwiftReachAPI": {}
+        "SwiftAPI": {}
       }
     }
   }

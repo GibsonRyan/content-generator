@@ -1,3 +1,13 @@
 {
-  "lambdaLayers": []
+  "lambdaLayers": [],
+  "permissions": {
+    "storage": {
+      "SwiftReachHistory": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  }
 }
