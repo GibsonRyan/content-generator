@@ -18,11 +18,24 @@
           "userPoolName": "SwiftReach-users",
           "webClientId": "7igjc5q0ugl7rbp9atcm2qp5mb",
           "nativeClientId": "po99f6lm457dlilc76kf9mmtu"
+        },
+        "swiftreach7e355c14": {
+          "userPoolId": "us-east-1_EcHBow0LR",
+          "userPoolName": "SwiftReach-users",
+          "webClientId": "7igjc5q0ugl7rbp9atcm2qp5mb",
+          "nativeClientId": "po99f6lm457dlilc76kf9mmtu"
         }
       },
       "function": {
         "swiftreachhistory": {},
-        "swiftreachprompts": {}
+        "swiftreachprompts": {
+          "deploymentBucketName": "amplify-amplifydab2d7ed07784-staging-214854-deployment",
+          "s3Key": "amplify-builds/swiftreachprompts-78556a70797a63644f7a-build.zip"
+        },
+        "swiftReachHistory": {
+          "deploymentBucketName": "amplify-amplifydab2d7ed07784-staging-214854-deployment",
+          "s3Key": "amplify-builds/swiftReachHistory-3336763775474f677a48-build.zip"
+        }
       },
       "storage": {
         "SwiftReachHistory": {
@@ -30,7 +43,8 @@
           "region": "us-east-1",
           "arn": "arn:aws:dynamodb:us-east-1:783533502506:table/SwiftReachHistory",
           "partitionKeyName": "id",
-          "partitionKeyType": "S"
+          "partitionKeyType": "S",
+          "streamArn": "arn:aws:dynamodb:us-east-1:783533502506:table/SwiftReachHistory/stream/2023-04-25T22:33:49.026"
         },
         "SwiftReachPromptsdev": {
           "tableName": "SwiftReachPrompts-dev",
@@ -40,6 +54,9 @@
           "partitionKeyName": "id",
           "partitionKeyType": "S"
         }
+      },
+      "api": {
+        "SwiftAPI": {}
       }
     }
   }

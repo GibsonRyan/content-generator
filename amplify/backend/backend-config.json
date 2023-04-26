@@ -8,7 +8,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "swiftreachhistory"
+          "resourceName": "swiftreachprompts"
         },
         {
           "attributes": [
@@ -16,7 +16,7 @@
             "Arn"
           ],
           "category": "function",
-          "resourceName": "swiftreachprompts"
+          "resourceName": "swiftReachHistory"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -24,7 +24,7 @@
     }
   },
   "auth": {
-    "swiftreach82cda444": {
+    "swiftreach7e355c14": {
       "customAuth": false,
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
@@ -33,7 +33,7 @@
     }
   },
   "function": {
-    "swiftreachhistory": {
+    "swiftReachHistory": {
       "build": true,
       "dependsOn": [
         {
@@ -67,6 +67,38 @@
     }
   },
   "parameters": {
+    "AMPLIFY_auth_swiftreach7e355c14_nativeClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "swiftreach7e355c14"
+        }
+      ]
+    },
+    "AMPLIFY_auth_swiftreach7e355c14_userPoolId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "swiftreach7e355c14"
+        }
+      ]
+    },
+    "AMPLIFY_auth_swiftreach7e355c14_userPoolName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "swiftreach7e355c14"
+        }
+      ]
+    },
+    "AMPLIFY_auth_swiftreach7e355c14_webClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "swiftreach7e355c14"
+        }
+      ]
+    },
     "AMPLIFY_auth_swiftreach82cda444_nativeClientId": {
       "usedBy": [
         {
@@ -99,6 +131,38 @@
         }
       ]
     },
+    "AMPLIFY_function_swiftReachHistory_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "swiftReachHistory"
+        }
+      ]
+    },
+    "AMPLIFY_function_swiftReachHistory_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "swiftReachHistory"
+        }
+      ]
+    },
+    "AMPLIFY_function_swiftreachprompts_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "swiftreachprompts"
+        }
+      ]
+    },
+    "AMPLIFY_function_swiftreachprompts_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "swiftreachprompts"
+        }
+      ]
+    },
     "AMPLIFY_storage_SwiftReachHistory_arn": {
       "usedBy": [
         {
@@ -124,6 +188,14 @@
       ]
     },
     "AMPLIFY_storage_SwiftReachHistory_region": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "SwiftReachHistory"
+        }
+      ]
+    },
+    "AMPLIFY_storage_SwiftReachHistory_streamArn": {
       "usedBy": [
         {
           "category": "storage",
