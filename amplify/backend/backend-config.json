@@ -24,7 +24,7 @@
     }
   },
   "auth": {
-    "swiftreach7e355c14": {
+    "swiftreach058c3340": {
       "customAuth": false,
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
@@ -67,35 +67,35 @@
     }
   },
   "parameters": {
-    "AMPLIFY_auth_swiftreach7e355c14_nativeClientId": {
+    "AMPLIFY_auth_swiftreach058c3340_nativeClientId": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "swiftreach7e355c14"
+          "resourceName": "swiftreach058c3340"
         }
       ]
     },
-    "AMPLIFY_auth_swiftreach7e355c14_userPoolId": {
+    "AMPLIFY_auth_swiftreach058c3340_userPoolId": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "swiftreach7e355c14"
+          "resourceName": "swiftreach058c3340"
         }
       ]
     },
-    "AMPLIFY_auth_swiftreach7e355c14_userPoolName": {
+    "AMPLIFY_auth_swiftreach058c3340_userPoolName": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "swiftreach7e355c14"
+          "resourceName": "swiftreach058c3340"
         }
       ]
     },
-    "AMPLIFY_auth_swiftreach7e355c14_webClientId": {
+    "AMPLIFY_auth_swiftreach058c3340_webClientId": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "swiftreach7e355c14"
+          "resourceName": "swiftreach058c3340"
         }
       ]
     },
