@@ -1,7 +1,7 @@
 import { API, Auth } from "aws-amplify";
 
 export const getPrompt = async (language, topic) => {
-  const apiName = "SwiftReachAPI";
+  const apiName = "SwiftAPI";
   const path = "/prompt";
   const queryParams = {
     queryStringParameters: {
@@ -18,7 +18,7 @@ export const sendChatHistory = async (chatHistory) => {
     const currentUser = await Auth.currentAuthenticatedUser();
     const sub = currentUser.attributes.sub;
 
-    const apiName = "SwiftReachAPI";
+    const apiName = "SwiftAPI";
     const path = "/history";
     const data = {
       body: {
