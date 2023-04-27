@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button, Container, Typography, Grid, Select, MenuItem, InputLabel, FormControl, AppBar, TextField, Switch, FormControlLabel, Box, CircularProgress, List, ListItem } from "@mui/material";
 import FaceIcon from "@mui/icons-material/Face";
 import MicIcon from "@mui/icons-material/Mic";
+import StopIcon from "@mui/icons-material/Stop";
 import { fetchOpenAIResponse } from "../APIs/gpt";
 import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -53,6 +54,13 @@ const Chatbot = () => {
   const handleAiVoiceChange = (event, newAiVoice) => {
     if (newAiVoice !== null) {
       setAiVoice(newAiVoice);
+    }
+  };
+
+  const handleInputKeyPress = (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      handleSubmitResponse();
     }
   };
 
@@ -248,8 +256,8 @@ const Chatbot = () => {
           </Box>
         </Grid>
         <Grid item xs={12}>
-          <Grid container spacing={1} alignItems="flex-end">
-            <Grid item xs>
+          <Grid container spacing={1} alignItems="stretch">
+            <Grid item xs={9}>
               <TextField
                 fullWidth
                 multiline
@@ -257,27 +265,46 @@ const Chatbot = () => {
                 label="Type your message"
                 value={inputText}
                 onChange={handleInputTextChange}
+                onKeyPress={handleInputKeyPress}
               />
             </Grid>
-            <Grid item>
-              <MicIcon
-                onClick={handleMicIconClick}
-                sx={{
-                  color: isRecording ? 'primary.main' : 'grey.400',
-                  '&:hover': { color: 'white' },
-                  cursor: 'pointer',
-                  fontSize: "2rem",
-                }}
-              />
+            <Grid item xs={3}>
+              <Button
+                fullWidth
+                variant="contained"
+                color="secondary"
+                onClick={handleSubmitResponse}
+                style={{ height: '100%' }}
+              >
+                Send Message
+              </Button>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleSubmitResponse}
-          >Submit response</Button>
+        <Grid item xs={12}>
+          <Grid container justifyContent="center">
+            {isRecording ? (
+              <StopIcon
+                onClick={handleMicIconClick}
+                sx={{
+                  color: 'secondary.main',
+                  '&:hover': { color: 'white' },
+                  cursor: 'pointer',
+                  fontSize: "5rem",
+                }}
+              />
+            ) : (
+              <MicIcon
+                onClick={handleMicIconClick}
+                sx={{
+                  color: 'grey.400',
+                  '&:hover': { color: 'white' },
+                  cursor: 'pointer',
+                  fontSize: "5rem",
+                }}
+              />
+            )}
+          </Grid>
         </Grid>
       </Grid>
     </Container >
