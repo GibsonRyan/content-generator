@@ -34,3 +34,49 @@ export const sendChatHistory = async (chatHistory) => {
     console.error("Error sending chat history", error);
   }
 };
+
+export const getChatHistory = async () => {
+  try {
+    const currentUser = await Auth.currentAuthenticatedUser();
+    const userId = currentUser.attributes.sub;
+
+    const apiName = "SwiftAPI";
+    const path = "/history";
+    const queryParams = {
+      queryStringParameters: {
+        userId: userId,
+      },
+    };
+
+    const response = await API.get(apiName, path, queryParams);
+    console.log("Chat history retrieved successfully", response);
+
+    const chatbotHistory = [];
+    const lessonHistory = [];
+    const translationHistory = [];
+
+    response.forEach((item) => {
+      if (item.type === "chatbot") {
+        chatbotHistory.push(item);
+      } else if (item.type === "lesson") {
+        lessonHistory.push(item);
+      } else if (item.type === "translation") {
+        translationHistory.push(item);
+      }
+    });
+
+    return {
+      chatbot: chatbotHistory,
+      Lesson: lessonHistory,
+      translation: translationHistory
+    };
+  } catch (error) {
+    console.error("Error retrieving chat history", error);
+    return {
+      chatbot: [],
+      lesson: [],
+      translation: []
+    };
+  }
+};
+

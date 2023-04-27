@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   Typography,
@@ -7,25 +7,93 @@ import {
   Box,
   List,
   ListItem,
+  ListItemButton,
 } from '@mui/material';
 import SchoolIcon from '@mui/icons-material/School';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
+import { getChatHistory } from '../APIs/api';
 
 const Dashboard = () => {
-  const dummyRows = [
-    { title: 'Dummy Row 1' },
-    { title: 'Dummy Row 2' },
-    { title: 'Dummy Row 3' },
-  ];
+  const [history, setHistory] = useState({
+    chatbot: [],
+    lesson: [],
+    translation: [],
+  });
 
-  const renderDummyRows = () => {
-    return dummyRows.map((row, index) => (
-      <ListItem key={index}>
-        <Typography variant="body1">{row.title}</Typography>
-      </ListItem>
-    ));
+  useEffect(() => {
+    const fetchHistory = async () => {
+      const fetchedHistory = await getChatHistory();
+      setHistory(fetchedHistory);
+    };
+
+    fetchHistory();
+  }, []);
+
+  const handleClick = (itemId, messages) => {
+    console.log('Item ID:', itemId, 'Messages:', messages);
   };
+
+  const renderHistoryItems = (historyArray) => {
+    if (!historyArray) return null;
+    return historyArray.map((item, index) => {
+      if (item.history) {
+        const messages = item.history;
+        const filteredMessages = messages.filter(
+          (message) => message.role !== 'system'
+        );
+        const lastTwoMessages = filteredMessages.slice(-2);
+        return (
+          <React.Fragment key={index}>
+            <ListItem>
+              <ListItemButton
+                onClick={() => handleClick(item.id, messages)}
+                sx={{
+                  width: '100%',
+                  borderBottom: '1px solid',
+                  borderColor: 'white',
+                }}
+              >
+                <ListItem>
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      writingMode: 'vertical-rl',
+                      textOrientation: 'mixed',
+                      paddingRight: '16px',
+                    }}
+                  >
+                    {item.date}
+                  </Typography>
+                </ListItem>
+                <List>
+                  {lastTwoMessages.map((message, idx) => (
+                    <ListItem key={idx} disablePadding>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          color:
+                            message.role === 'assistant'
+                              ? 'info.main'
+                              : 'white',
+                        }}
+                      >
+                        {message.content}
+                      </Typography>
+                    </ListItem>
+                  ))}
+                </List>
+              </ListItemButton>
+            </ListItem>
+          </React.Fragment>
+        );
+      }
+      return null;
+    });
+  };
+
+
+
 
   return (
     <Container maxWidth="lg">
@@ -34,7 +102,7 @@ const Dashboard = () => {
           <Typography variant="h4">Dashboard</Typography>
         </Grid>
         <Grid item sm={12} md={6} lg={4}>
-          <AppBar position="static" color="primary">
+          <AppBar position="static" color="secondary">
             <Grid container alignItems="center" justifyContent="center">
               <SchoolIcon
                 sx={{
@@ -53,11 +121,11 @@ const Dashboard = () => {
               overflowY: 'auto',
             }}
           >
-            <List>{renderDummyRows()}</List>
+            <List>{renderHistoryItems(history.lesson)}</List>
           </Box>
         </Grid>
         <Grid item sm={12} md={6} lg={4}>
-          <AppBar position="static" color="primary">
+          <AppBar position="static" color="secondary">
             <Grid container alignItems="center" justifyContent="center">
               <ChatBubbleIcon
                 sx={{
@@ -76,11 +144,11 @@ const Dashboard = () => {
               overflowY: 'auto',
             }}
           >
-            <List>{renderDummyRows()}</List>
+            <List>{renderHistoryItems(history.chatbot)}</List>
           </Box>
         </Grid>
         <Grid item sm={12} md={6} lg={4}>
-          <AppBar position="static" color="primary">
+          <AppBar position="static" color="secondary">
             <Grid container alignItems="center" justifyContent="center">
               <RecordVoiceOverIcon
                 sx={{
@@ -99,7 +167,7 @@ const Dashboard = () => {
               overflowY: 'auto',
             }}
           >
-            <List>{renderDummyRows()}</List>
+            <List>{renderHistoryItems(history.translation)}</List>
           </Box>
         </Grid>
       </Grid>

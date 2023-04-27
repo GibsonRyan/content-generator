@@ -1,4 +1,3 @@
-// openaiHelper.js
 import { Configuration, OpenAIApi } from "openai";
 
 
