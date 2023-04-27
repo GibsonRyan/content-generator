@@ -30,7 +30,7 @@
         "swiftreachhistory": {},
         "swiftreachprompts": {
           "deploymentBucketName": "amplify-amplifydab2d7ed07784-staging-214854-deployment",
-          "s3Key": "amplify-builds/swiftreachprompts-4c67506d415545753239-build.zip"
+          "s3Key": "amplify-builds/swiftreachprompts-42644d47503231593053-build.zip"
         },
         "swiftReachHistory": {
           "deploymentBucketName": "amplify-amplifydab2d7ed07784-staging-214854-deployment",

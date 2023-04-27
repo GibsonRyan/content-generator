@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Button, Container, Typography, Grid, TextField, AppBar, Box, List, ListItem } from "@mui/material";
+import { FormControlLabel, Switch, Button, Container, Typography, Grid, TextField, AppBar, Box, List, ListItem } from "@mui/material";
 import MicIcon from "@mui/icons-material/Mic";
+import StopIcon from "@mui/icons-material/Stop";
 import { fetchOpenAIResponse } from "../APIs/gpt";
 import AWS from "aws-sdk";
 import { Howl } from "howler";
@@ -32,6 +33,12 @@ const Translate = () => {
       startRecording();
     } else {
       await stopRecording();
+    }
+  };
+
+  const handleAiVoiceChange = (event, newAiVoice) => {
+    if (newAiVoice !== null) {
+      setAiVoice(newAiVoice);
     }
   };
 
@@ -110,6 +117,13 @@ const Translate = () => {
     setIsRecording(false);
   };
 
+  const handleInputKeyPress = (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      handleSubmitResponse();
+    }
+  };
+
   useEffect(() => {
     startTranslator();
   }, []);
@@ -123,6 +137,18 @@ const Translate = () => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Typography variant="h4">Live Translator</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <FormControlLabel
+            control={
+              <Switch
+                checked={aiVoice}
+                onChange={handleAiVoiceChange}
+                color="secondary"
+              />
+            }
+            label="AI Voice"
+          />
         </Grid>
         <Grid item xs={12}>
           <AppBar position="static" color="primary">
@@ -169,6 +195,7 @@ const Translate = () => {
                 label="Type your message"
                 value={inputText}
                 onChange={handleInputTextChange}
+                onKeyPress={handleInputKeyPress}
               />
             </Grid>
             <Grid item xs={3}>
@@ -186,15 +213,27 @@ const Translate = () => {
         </Grid>
         <Grid item xs={12}>
           <Grid container justifyContent="center">
-            <MicIcon
-              onClick={handleMicIconClick}
-              sx={{
-                color: isRecording ? 'secondary.main' : 'grey.400',
-                '&:hover': { color: 'white' },
-                cursor: 'pointer',
-                fontSize: "5rem",
-              }}
-            />
+            {isRecording ? (
+              <StopIcon
+                onClick={handleMicIconClick}
+                sx={{
+                  color: 'secondary.main',
+                  '&:hover': { color: 'white' },
+                  cursor: 'pointer',
+                  fontSize: "5rem",
+                }}
+              />
+            ) : (
+              <MicIcon
+                onClick={handleMicIconClick}
+                sx={{
+                  color: 'grey.400',
+                  '&:hover': { color: 'white' },
+                  cursor: 'pointer',
+                  fontSize: "5rem",
+                }}
+              />
+            )}
           </Grid>
         </Grid>
       </Grid>
