@@ -159,7 +159,12 @@ const Chatbot = () => {
   useEffect(() => {
     return () => {
       // This function will be called when the component is unmounted
-      sendChatHistory(chatHistoryRef.current, 'chatbot', language, topic, null, conversation?.id ?? null);
+      const today = new Date();
+      const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so add 1
+      const day = String(today.getDate()).padStart(2, '0');
+      const year = today.getFullYear();
+      const formattedDate = `${month}/${day}/${year}`;
+      sendChatHistory(formattedDate, chatHistoryRef.current, 'chatbot', language, topic, null, conversation?.id ?? null);
     };
   }, []); // Pass an empty array as the dependency to run the cleanup function only on unmount
 

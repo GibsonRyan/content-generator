@@ -60,7 +60,7 @@ app.get('/history', function(req, res) {
 });
 
 app.post('/history', function(req, res) {
-  const { userId, type, history, id, language, topic, difficulty } = req.body;
+  const { userId, type, history, id, language, topic, difficulty, date } = req.body;
   if (history.length === 0) res.status(200).json({ success: "No history to save" });
   else {
     const newItem = {
@@ -71,6 +71,7 @@ app.post('/history', function(req, res) {
       language, 
       topic,
       difficulty,
+      date
     };
   
     const params = {

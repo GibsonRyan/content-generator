@@ -34,7 +34,7 @@
         },
         "swiftReachHistory": {
           "deploymentBucketName": "amplify-amplifydab2d7ed07784-staging-214854-deployment",
-          "s3Key": "amplify-builds/swiftReachHistory-72725368636c31624f68-build.zip"
+          "s3Key": "amplify-builds/swiftReachHistory-55787855374131776e53-build.zip"
         }
       },
       "storage": {
