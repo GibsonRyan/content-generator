@@ -9,13 +9,13 @@ import {
   ListItem,
   ListItemButton,
 } from '@mui/material';
+import { useNavigate } from "react-router-dom";
 import SchoolIcon from '@mui/icons-material/School';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
-import RecordVoiceOverIcon from '@mui/icons-material/RecordVoiceOver';
 import { getChatHistory } from '../APIs/api';
 
 const Dashboard = () => {
-  const [history, setHistory] = useState({
+  const [chatHistory, setChatHistory] = useState({
     chatbot: [],
     lesson: [],
     translation: [],
@@ -24,17 +24,19 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchHistory = async () => {
       const fetchedHistory = await getChatHistory();
-      setHistory(fetchedHistory);
+      setChatHistory(fetchedHistory);
     };
 
     fetchHistory();
   }, []);
 
-  const handleClick = (itemId, messages) => {
-    console.log('Item ID:', itemId, 'Messages:', messages);
+  const navigate = useNavigate();
+
+  const handleClick = (component, item) => {
+    navigate(component, { state: { item } });
   };
 
-  const renderHistoryItems = (historyArray) => {
+  const renderHistoryItems = (historyArray, component) => {
     if (!historyArray) return null;
     return historyArray.map((item, index) => {
       if (item.history) {
@@ -47,42 +49,52 @@ const Dashboard = () => {
           <React.Fragment key={index}>
             <ListItem>
               <ListItemButton
-                onClick={() => handleClick(item.id, messages)}
+                onClick={() => handleClick(component, item)}
                 sx={{
                   width: '100%',
                   borderBottom: '1px solid',
                   borderColor: 'white',
                 }}
               >
-                <ListItem>
-                  <Typography
-                    variant="body1"
-                    sx={{
-                      writingMode: 'vertical-rl',
-                      textOrientation: 'mixed',
-                      paddingRight: '16px',
-                    }}
-                  >
-                    {item.date}
-                  </Typography>
-                </ListItem>
-                <List>
-                  {lastTwoMessages.map((message, idx) => (
-                    <ListItem key={idx} disablePadding>
+                <Grid container justifyContent="space-between" spacing={2}>
+                  <Grid item xs={2}>
+                    <ListItem>
                       <Typography
                         variant="body1"
                         sx={{
-                          color:
-                            message.role === 'assistant'
-                              ? 'info.main'
-                              : 'white',
+                          writingMode: 'vertical-rl',
+                          textOrientation: 'mixed',
+                          paddingRight: '16px',
                         }}
                       >
-                        {message.content}
+                        {item.date}
                       </Typography>
                     </ListItem>
-                  ))}
-                </List>
+                  </Grid>
+                  <Grid item xs={10}>
+                    <List>
+                      <Grid container justifyContent="space-between" spacing={2}>
+                        {lastTwoMessages.map((message, idx) => (
+                          <Grid item>
+                            <ListItem key={idx} disablePadding>
+                              <Typography
+                                variant="body1"
+                                sx={{
+                                  color:
+                                    message.role === 'assistant'
+                                      ? 'info.main'
+                                      : 'white',
+                                }}
+                              >
+                                {message.content}
+                              </Typography>
+                            </ListItem>
+                          </Grid>
+                        ))}
+                      </Grid>
+                    </List>
+                  </Grid>
+                </Grid>
               </ListItemButton>
             </ListItem>
           </React.Fragment>
@@ -101,7 +113,7 @@ const Dashboard = () => {
         <Grid item xs={12}>
           <Typography variant="h4">Dashboard</Typography>
         </Grid>
-        <Grid item sm={12} md={6} lg={4}>
+        <Grid item sm={12} lg={6}>
           <AppBar position="static" color="secondary">
             <Grid container alignItems="center" justifyContent="center">
               <SchoolIcon
@@ -109,7 +121,7 @@ const Dashboard = () => {
                   fontSize: '3rem',
                 }}
               />
-              <Typography variant="h6">Lessons</Typography>
+              <Typography variant="h6" marginLeft={2}>Lessons History</Typography>
             </Grid>
           </AppBar>
           <Box
@@ -117,14 +129,14 @@ const Dashboard = () => {
               backgroundColor: 'background.dark',
               borderRadius: 1,
               padding: 2,
-              height: '50vh',
+              height: '75vh',
               overflowY: 'auto',
             }}
           >
-            <List>{renderHistoryItems(history.lesson)}</List>
+            <List>{renderHistoryItems(chatHistory.lesson, '/lessons')}</List>
           </Box>
         </Grid>
-        <Grid item sm={12} md={6} lg={4}>
+        <Grid item sm={12} lg={6}>
           <AppBar position="static" color="secondary">
             <Grid container alignItems="center" justifyContent="center">
               <ChatBubbleIcon
@@ -132,7 +144,7 @@ const Dashboard = () => {
                   fontSize: '3rem',
                 }}
               />
-              <Typography variant="h6">Conversations</Typography>
+              <Typography variant="h6" marginLeft={2}>Conversations History</Typography>
             </Grid>
           </AppBar>
           <Box
@@ -140,34 +152,11 @@ const Dashboard = () => {
               backgroundColor: 'background.dark',
               borderRadius: 1,
               padding: 2,
-              height: '50vh',
+              height: '75vh',
               overflowY: 'auto',
             }}
           >
-            <List>{renderHistoryItems(history.chatbot)}</List>
-          </Box>
-        </Grid>
-        <Grid item sm={12} md={6} lg={4}>
-          <AppBar position="static" color="secondary">
-            <Grid container alignItems="center" justifyContent="center">
-              <RecordVoiceOverIcon
-                sx={{
-                  fontSize: '3rem',
-                }}
-              />
-              <Typography variant="h6">Live Translator</Typography>
-            </Grid>
-          </AppBar>
-          <Box
-            sx={{
-              backgroundColor: 'background.dark',
-              borderRadius: 1,
-              padding: 2,
-              height: '50vh',
-              overflowY: 'auto',
-            }}
-          >
-            <List>{renderHistoryItems(history.translation)}</List>
+            <List>{renderHistoryItems(chatHistory.chatbot, '/chatbot')}</List>
           </Box>
         </Grid>
       </Grid>

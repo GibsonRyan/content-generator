@@ -13,7 +13,7 @@ export const getPrompt = async (language, topic) => {
   return response[0].prompt;
 };
 
-export const sendChatHistory = async (chatHistory) => {
+export const sendChatHistory = async (chatHistory, chatType, language, topic, difficulty = null, chatId = null) => {
   try {
     const currentUser = await Auth.currentAuthenticatedUser();
     const sub = currentUser.attributes.sub;
@@ -23,8 +23,12 @@ export const sendChatHistory = async (chatHistory) => {
     const data = {
       body: {
         userId: sub,
-        type: "chatbot",
+        type: chatType,
         history: chatHistory,
+        id: chatId,
+        language: language,
+        topic: topic,
+        difficulty: difficulty
       },
     };
 

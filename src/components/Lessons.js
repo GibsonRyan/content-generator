@@ -11,6 +11,8 @@ import { Howl } from "howler";
 import { getPrompt, sendChatHistory } from "../APIs/api";
 import { uploadAudioToWhisper } from "../APIs/audio";
 import { textToSpeech } from "../APIs/textToSpeech";
+import { useLocation } from "react-router-dom";
+
 
 AWS.config.update({
   accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
@@ -31,6 +33,9 @@ const Lessons = () => {
   const mediaRecorder = useRef(null);
   const [audioPlayer, setAudioPlayer] = useState(null);
   const [difficulty, setDifficulty] = useState("");
+  const location = useLocation();
+  const conversation = location.state?.item;
+
 
   const handleMicIconClick = async () => {
     if (audioPlayer) {
@@ -146,13 +151,23 @@ const Lessons = () => {
   }, [language, topic]);
 
   useEffect(() => {
+    console.log(conversation);
+    if (conversation) {
+      setLanguage(conversation.language);
+      setTopic(conversation.topic);
+      setDifficulty(conversation.difficulty);
+      setChatHistory(conversation.history)
+    }
+  }, [conversation]);
+
+  useEffect(() => {
     chatHistoryRef.current = chatHistory; // Update the ref whenever chatHistory changes
   }, [chatHistory]);
 
   useEffect(() => {
     return () => {
       // This function will be called when the component is unmounted
-      sendChatHistory(chatHistoryRef.current);
+      sendChatHistory(chatHistoryRef.current, 'lesson', language, topic, difficulty, conversation?.id ?? null);
     };
   }, []); // Pass an empty array as the dependency to run the cleanup function only on unmount
 

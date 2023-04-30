@@ -7,6 +7,7 @@ import { fetchOpenAIResponse } from "../APIs/gpt";
 import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import AWS from "aws-sdk";
+import { useLocation } from "react-router-dom";
 import { Howl } from "howler";
 import { getPrompt, sendChatHistory } from "../APIs/api";
 import { uploadAudioToWhisper } from "../APIs/audio";
@@ -30,6 +31,8 @@ const Chatbot = () => {
   const [isRecording, setIsRecording] = useState(false);
   const mediaRecorder = useRef(null);
   const [audioPlayer, setAudioPlayer] = useState(null);
+  const location = useLocation();
+  const conversation = location.state?.item;
 
   const handleMicIconClick = async () => {
     if (audioPlayer) {
@@ -129,6 +132,15 @@ const Chatbot = () => {
   };
 
   useEffect(() => {
+    console.log(conversation);
+    if (conversation) {
+      setLanguage(conversation.language);
+      setTopic(conversation.topic);
+      setChatHistory(conversation.history)
+    }
+  }, [conversation]);
+
+  useEffect(() => {
     const fetchPrompt = async () => {
       if (language && topic) {
         setIsLoading(true);
@@ -147,7 +159,7 @@ const Chatbot = () => {
   useEffect(() => {
     return () => {
       // This function will be called when the component is unmounted
-      sendChatHistory(chatHistoryRef.current);
+      sendChatHistory(chatHistoryRef.current, 'chatbot', language, topic, null, conversation?.id ?? null);
     };
   }, []); // Pass an empty array as the dependency to run the cleanup function only on unmount
 
