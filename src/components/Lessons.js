@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button, Container, Typography, Grid, Select, MenuItem, InputLabel, FormControl, AppBar, TextField, Switch, FormControlLabel, Box, CircularProgress, List, ListItem } from "@mui/material";
 import FaceIcon from "@mui/icons-material/Face";
 import MicIcon from "@mui/icons-material/Mic";
+import StopIcon from "@mui/icons-material/Stop";
 import { fetchOpenAIResponse } from "../APIs/gpt";
 import Tooltip from '@mui/material/Tooltip';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -10,6 +11,8 @@ import { Howl } from "howler";
 import { getPrompt, sendChatHistory } from "../APIs/api";
 import { uploadAudioToWhisper } from "../APIs/audio";
 import { textToSpeech } from "../APIs/textToSpeech";
+import { useLocation } from "react-router-dom";
+
 
 AWS.config.update({
   accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID,
@@ -30,6 +33,9 @@ const Lessons = () => {
   const mediaRecorder = useRef(null);
   const [audioPlayer, setAudioPlayer] = useState(null);
   const [difficulty, setDifficulty] = useState("");
+  const location = useLocation();
+  const conversation = location.state?.item;
+
 
   const handleMicIconClick = async () => {
     if (audioPlayer) {
@@ -63,6 +69,13 @@ const Lessons = () => {
 
   const handleInputTextChange = (event) => {
     setInputText(event.target.value);
+  };
+
+  const handleInputKeyPress = (event) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      handleSubmitResponse();
+    }
   };
 
   const playAiVoice = async (responseText) => {
@@ -138,13 +151,29 @@ const Lessons = () => {
   }, [language, topic]);
 
   useEffect(() => {
+    console.log(conversation);
+    if (conversation) {
+      setLanguage(conversation.language);
+      setTopic(conversation.topic);
+      setDifficulty(conversation.difficulty);
+      setChatHistory(conversation.history)
+    }
+  }, [conversation]);
+
+  useEffect(() => {
     chatHistoryRef.current = chatHistory; // Update the ref whenever chatHistory changes
   }, [chatHistory]);
 
   useEffect(() => {
     return () => {
       // This function will be called when the component is unmounted
-      sendChatHistory(chatHistoryRef.current);
+      const today = new Date();
+      const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed, so add 1
+      const day = String(today.getDate()).padStart(2, '0');
+      const year = today.getFullYear();
+      const formattedDate = `${month}/${day}/${year}`;
+
+      sendChatHistory(formattedDate, chatHistoryRef.current, 'lesson', language, topic, difficulty, conversation?.id ?? null);
     };
   }, []); // Pass an empty array as the dependency to run the cleanup function only on unmount
 
@@ -167,29 +196,16 @@ const Lessons = () => {
         </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <InputLabel sx={{ color: 'white' }}>Select Difficulty</InputLabel>
-            <Select value={difficulty} onChange={handleDifficultyChange}>
-              <MenuItem sx={{ color: 'black' }} value="beginner">Beginner</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="intermediate">Intermediate</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="advanced">Advanced</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12}>
-          <FormControl fullWidth>
             <InputLabel sx={{ color: 'white' }}>Select Lesson</InputLabel>
             <Select value={topic} onChange={handleTopicChange}>
               {/* Add available topics as MenuItems here */}
-              <MenuItem sx={{ color: 'black' }} value="sports">Sports</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="science">Science</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="technology">Technology</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="school">School</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="restaurant">Restaurant</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="pets">Pets</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="grocery checkout">Grocery Checkout</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="getting directions">Getting Directions</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="hobbies">Hobbies</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="improvise">Improvise</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="synonymnsAntonyms">Synonyms and Antonyms</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="commonPhrases">Common Phrases</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="commonWords">Common Words</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="idioms">Idioms</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="grammarSuggestions">Grammar Suggestions</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="gendersOfNouns">Nouns and Genders</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="conjugation">Conjugation of Verbs</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -263,8 +279,8 @@ const Lessons = () => {
           </Box>
         </Grid>
         <Grid item xs={12}>
-          <Grid container spacing={1} alignItems="flex-end">
-            <Grid item xs>
+          <Grid container spacing={1} alignItems="stretch">
+            <Grid item xs={9}>
               <TextField
                 fullWidth
                 multiline
@@ -272,27 +288,46 @@ const Lessons = () => {
                 label="Type your message"
                 value={inputText}
                 onChange={handleInputTextChange}
+                onKeyPress={handleInputKeyPress}
               />
             </Grid>
-            <Grid item>
-              <MicIcon
-                onClick={handleMicIconClick}
-                sx={{
-                  color: isRecording ? 'primary.main' : 'grey.400',
-                  '&:hover': { color: 'white' },
-                  cursor: 'pointer',
-                  fontSize: "2rem",
-                }}
-              />
+            <Grid item xs={3}>
+              <Button
+                fullWidth
+                variant="contained"
+                color="secondary"
+                onClick={handleSubmitResponse}
+                style={{ height: '100%' }}
+              >
+                Send Message
+              </Button>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleSubmitResponse}
-          >Submit response</Button>
+        <Grid item xs={12}>
+          <Grid container justifyContent="center">
+            {isRecording ? (
+              <StopIcon
+                onClick={handleMicIconClick}
+                sx={{
+                  color: 'secondary.main',
+                  '&:hover': { color: 'white' },
+                  cursor: 'pointer',
+                  fontSize: "5rem",
+                }}
+              />
+            ) : (
+              <MicIcon
+                onClick={handleMicIconClick}
+                sx={{
+                  color: 'grey.400',
+                  '&:hover': { color: 'white' },
+                  cursor: 'pointer',
+                  fontSize: "5rem",
+                }}
+              />
+            )}
+          </Grid>
         </Grid>
       </Grid>
     </Container >

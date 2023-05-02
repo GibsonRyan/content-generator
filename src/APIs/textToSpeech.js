@@ -1,18 +1,19 @@
-const franc = require('franc');
-const langs = require('langs');
-const Polly = require('aws-sdk/clients/polly');
+import { franc } from 'franc';
+import langs from 'langs';
+import Polly from 'aws-sdk/clients/polly';
 
 export const textToSpeech = async (text, language = null) => {
   const voiceMapping = {
-    es: "Conchita", 
-    fr: "Celine", 
-    de: "Marlene", 
+    es: "Conchita",
+    fr: "Celine",
+    de: "Marlene",
   };
 
   if (!language) {
     const detectedLanguage = franc(text);
     const languageInfo = langs.where('3', detectedLanguage);
     language = languageInfo && languageInfo['1'];
+    console.log("Detected language", language)
   }
 
   const polly = new Polly({
@@ -23,8 +24,8 @@ export const textToSpeech = async (text, language = null) => {
   const params = {
     OutputFormat: "mp3",
     SampleRate: "16000",
-    Text: text,
-    TextType: "text",
+    Text: `<speak><break time="500ms"/>${text}</speak>`,
+    TextType: "ssml",
     VoiceId: voiceMapping[language] || "Joanna",
   };
 
