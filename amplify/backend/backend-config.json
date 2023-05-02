@@ -59,7 +59,7 @@
             "StreamArn"
           ],
           "category": "storage",
-          "resourceName": "SwiftReachPromptsdev"
+          "resourceName": "SwiftReachPrompts"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -211,51 +211,51 @@
         }
       ]
     },
-    "AMPLIFY_storage_SwiftReachPromptsdev_arn": {
+    "AMPLIFY_storage_SwiftReachPrompts_arn": {
       "usedBy": [
         {
           "category": "storage",
-          "resourceName": "SwiftReachPromptsdev"
+          "resourceName": "SwiftReachPrompts"
         }
       ]
     },
-    "AMPLIFY_storage_SwiftReachPromptsdev_partitionKeyName": {
+    "AMPLIFY_storage_SwiftReachPrompts_partitionKeyName": {
       "usedBy": [
         {
           "category": "storage",
-          "resourceName": "SwiftReachPromptsdev"
+          "resourceName": "SwiftReachPrompts"
         }
       ]
     },
-    "AMPLIFY_storage_SwiftReachPromptsdev_partitionKeyType": {
+    "AMPLIFY_storage_SwiftReachPrompts_partitionKeyType": {
       "usedBy": [
         {
           "category": "storage",
-          "resourceName": "SwiftReachPromptsdev"
+          "resourceName": "SwiftReachPrompts"
         }
       ]
     },
-    "AMPLIFY_storage_SwiftReachPromptsdev_region": {
+    "AMPLIFY_storage_SwiftReachPrompts_region": {
       "usedBy": [
         {
           "category": "storage",
-          "resourceName": "SwiftReachPromptsdev"
+          "resourceName": "SwiftReachPrompts"
         }
       ]
     },
-    "AMPLIFY_storage_SwiftReachPromptsdev_streamArn": {
+    "AMPLIFY_storage_SwiftReachPrompts_streamArn": {
       "usedBy": [
         {
           "category": "storage",
-          "resourceName": "SwiftReachPromptsdev"
+          "resourceName": "SwiftReachPrompts"
         }
       ]
     },
-    "AMPLIFY_storage_SwiftReachPromptsdev_tableName": {
+    "AMPLIFY_storage_SwiftReachPrompts_tableName": {
       "usedBy": [
         {
           "category": "storage",
-          "resourceName": "SwiftReachPromptsdev"
+          "resourceName": "SwiftReachPrompts"
         }
       ]
     }
@@ -267,7 +267,7 @@
       "service": "DynamoDB",
       "serviceType": "imported"
     },
-    "SwiftReachPromptsdev": {
+    "SwiftReachPrompts": {
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
       "service": "DynamoDB",

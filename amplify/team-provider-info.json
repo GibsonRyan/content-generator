@@ -30,7 +30,7 @@
         "swiftreachhistory": {},
         "swiftreachprompts": {
           "deploymentBucketName": "amplify-amplifydab2d7ed07784-staging-214854-deployment",
-          "s3Key": "amplify-builds/swiftreachprompts-42644d47503231593053-build.zip"
+          "s3Key": "amplify-builds/swiftreachprompts-304155646f49754a2b6e-build.zip"
         },
         "swiftReachHistory": {
           "deploymentBucketName": "amplify-amplifydab2d7ed07784-staging-214854-deployment",
@@ -46,13 +46,13 @@
           "partitionKeyType": "S",
           "streamArn": "arn:aws:dynamodb:us-east-1:783533502506:table/SwiftReachHistory/stream/2023-04-25T22:33:49.026"
         },
-        "SwiftReachPromptsdev": {
-          "tableName": "SwiftReachPrompts-dev",
+        "SwiftReachPrompts": {
+          "tableName": "SwiftReachPrompts",
           "region": "us-east-1",
-          "arn": "arn:aws:dynamodb:us-east-1:783533502506:table/SwiftReachPrompts-dev",
-          "streamArn": "arn:aws:dynamodb:us-east-1:783533502506:table/SwiftReachPrompts-dev/stream/2023-04-14T19:56:18.595",
+          "arn": "arn:aws:dynamodb:us-east-1:783533502506:table/SwiftReachPrompts",
           "partitionKeyName": "id",
-          "partitionKeyType": "S"
+          "partitionKeyType": "S",
+          "streamArn": "arn:aws:dynamodb:us-east-1:783533502506:table/SwiftReachPrompts/stream/2023-05-02T10:45:38.400"
         }
       },
       "api": {

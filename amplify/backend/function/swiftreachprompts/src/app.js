@@ -9,9 +9,9 @@ See the License for the specific language governing permissions and limitations 
 /* Amplify Params - DO NOT EDIT
 	ENV
 	REGION
-	STORAGE_SWIFTREACHPROMPTSDEV_ARN
-	STORAGE_SWIFTREACHPROMPTSDEV_NAME
-	STORAGE_SWIFTREACHPROMPTSDEV_STREAMARN
+	STORAGE_SWIFTREACHPROMPTS_ARN
+	STORAGE_SWIFTREACHPROMPTS_NAME
+	STORAGE_SWIFTREACHPROMPTS_STREAMARN
 Amplify Params - DO NOT EDIT */
 
 const AWS = require('aws-sdk')
@@ -23,7 +23,7 @@ AWS.config.update({ region: process.env.TABLE_REGION });
 
 const dynamodb = new AWS.DynamoDB.DocumentClient();
 
-let tableName = "SwiftReachPrompts-dev";
+let tableName = "SwiftReachPrompts";
 
 // declare a new express app
 const app = express()
