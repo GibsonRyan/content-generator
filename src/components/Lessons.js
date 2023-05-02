@@ -196,29 +196,16 @@ const Lessons = () => {
         </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth>
-            <InputLabel sx={{ color: 'white' }}>Select Difficulty</InputLabel>
-            <Select value={difficulty} onChange={handleDifficultyChange}>
-              <MenuItem sx={{ color: 'black' }} value="beginner">Beginner</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="intermediate">Intermediate</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="advanced">Advanced</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12}>
-          <FormControl fullWidth>
             <InputLabel sx={{ color: 'white' }}>Select Lesson</InputLabel>
             <Select value={topic} onChange={handleTopicChange}>
               {/* Add available topics as MenuItems here */}
-              <MenuItem sx={{ color: 'black' }} value="sports">Sports</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="science">Science</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="technology">Technology</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="school">School</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="restaurant">Restaurant</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="pets">Pets</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="grocery checkout">Grocery Checkout</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="getting directions">Getting Directions</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="hobbies">Hobbies</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="improvise">Improvise</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="synonymnsAntonyms">Synonyms and Antonyms</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="commonPhrases">Common Phrases</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="commonWords">Common Words</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="idioms">Idioms</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="grammarSuggestions">Grammar Suggestions</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="gendersOfNouns">Nouns and Genders</MenuItem>
+              <MenuItem sx={{ color: 'black' }} value="conjugation">Conjugation of Verbs</MenuItem>
             </Select>
           </FormControl>
         </Grid>

@@ -13,6 +13,7 @@ export const textToSpeech = async (text, language = null) => {
     const detectedLanguage = franc(text);
     const languageInfo = langs.where('3', detectedLanguage);
     language = languageInfo && languageInfo['1'];
+    console.log("Detected language", language)
   }
 
   const polly = new Polly({

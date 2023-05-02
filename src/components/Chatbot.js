@@ -142,9 +142,9 @@ const Chatbot = () => {
 
   useEffect(() => {
     const fetchPrompt = async () => {
-      if (language && topic) {
+      if (language) {
         setIsLoading(true);
-        setPrompt(await getPrompt(language, topic));
+        setPrompt(await getPrompt(language, 'conversation'));
         setIsLoading(false);
       }
     };
@@ -182,24 +182,6 @@ const Chatbot = () => {
               <MenuItem sx={{ color: 'black' }} value="es">Spanish</MenuItem>
               <MenuItem sx={{ color: 'black' }} value="fr">French</MenuItem>
               <MenuItem sx={{ color: 'black' }} value="de">German</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={12}>
-          <FormControl fullWidth>
-            <InputLabel sx={{ color: 'white' }}>Select Topic</InputLabel>
-            <Select value={topic} onChange={handleTopicChange}>
-              {/* Add available topics as MenuItems here */}
-              <MenuItem sx={{ color: 'black' }} value="sports">Sports</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="science">Science</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="technology">Technology</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="school">School</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="restaurant">Restaurant</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="pets">Pets</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="grocery checkout">Grocery Checkout</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="getting directions">Getting Directions</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="hobbies">Hobbies</MenuItem>
-              <MenuItem sx={{ color: 'black' }} value="improvise">Improvise</MenuItem>
             </Select>
           </FormControl>
         </Grid>
