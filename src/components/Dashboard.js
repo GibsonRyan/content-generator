@@ -25,6 +25,7 @@ const Dashboard = () => {
     const fetchHistory = async () => {
       const fetchedHistory = await getChatHistory();
       setChatHistory(fetchedHistory);
+      console.log(fetchedHistory);
     };
 
     fetchHistory();

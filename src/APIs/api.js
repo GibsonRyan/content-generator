@@ -72,7 +72,7 @@ export const getChatHistory = async () => {
 
     return {
       chatbot: chatbotHistory,
-      Lesson: lessonHistory,
+      lesson: lessonHistory,
       translation: translationHistory
     };
   } catch (error) {
